@@ -5,6 +5,21 @@
     --f-display:'Syne', sans-serif;
     --f-body:'DM Sans', sans-serif;
 
+    --iris: #5ce1e6;
+    --iris-2: #7eeaee;
+    --iris-3: #b0f3f5;
+    --iris-glow: rgba(92,225,230,0.32);
+    --rose: #f05fa0;
+    --rose-2: #f78ec0;
+    --amber: #f5c842;
+    --amber-2: #fde68a;
+    --jade: #2ddab0;
+    --jade-2: #72ecd2;
+    --cobalt: #4da8f0;
+    --cobalt-2: #93d0fb;
+    --coral: #ff7a55;
+    --coral-2: #ffb49a;
+
     /* gradients  */
     --g-iris:linear-gradient(135deg, #3ac8cd 0%, #7eeaee 100%);
     --g-rose:linear-gradient(135deg, #c43880 0%, #f05fa0 100%);
