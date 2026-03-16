@@ -1,0 +1,133 @@
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    border: none;
+    border-radius: var(--r-pill);
+    font-family: var(--f-body);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    white-space: nowrap;
+    position: relative;
+    transition: transform var(--e-1), filter var(--e-2), box-shadow var(--e-2), opacity var(--e-2);
+  }
+  
+  .btn:hover { 
+    transform: translateY(-1px) scale(1.022); 
+    
+    filter: brightness(1.08); 
+}
+  .btn:active {
+     transform: scale(0.97); 
+     filter: brightness(0.95); 
+}
+
+  .btn:disabled { 
+    opacity: 0.38; 
+    pointer-events: none; 
+}
+  .btn:focus-visible { 
+    outline: 2px solid var(--iris-2); 
+    outline-offset: 3px; 
+}
+  
+  /* variants */
+  .iris { 
+    background: var(--g-iris); 
+    color: #fff; 
+    box-shadow: 0 3px 14px rgba(112, 101, 217, 0.38); 
+}
+  .iris:hover { 
+    box-shadow: 0 5px 22px rgba(112, 101, 217, 0.55); 
+}
+  .rose { 
+    background: var(--g-rose); 
+    color: #fff; box-shadow: 0 3px 12px rgba(240, 84, 124, 0.34); 
+}
+
+  .jade { 
+    background: var(--g-jade); 
+    color: #fff; box-shadow: 0 3px 12px rgba(29, 199, 138, 0.32); 
+}
+
+  .amber { 
+    background: var(--g-amber); 
+    color: #1a0e00; box-shadow: 0 3px 12px rgba(245, 166, 35, 0.34); 
+}
+
+  .coral { 
+    background: var(--g-coral); 
+    color: #fff; box-shadow: 0 3px 12px rgba(255, 107, 71, 0.32); 
+}
+
+  .danger { 
+    background: var(--g-coral); 
+    color: #fff; box-shadow: 0 3px 12px rgba(229, 62, 30, 0.32); 
+}
+
+  
+  .ghost {
+    background: var(--surf-1);
+    border: 1px solid var(--b-1);
+    color: var(--t-2);
+    box-shadow: none;
+  }
+
+  .ghost:hover { 
+    background: var(--surf-2); 
+    border-color: var(--b-2); 
+    color: var(--t-1); 
+}
+  
+  .outline {
+    background: transparent;
+    border: 1.5px solid var(--b-iris);
+    color: var(--iris-2);
+  }
+  .outline:hover { 
+    background: var(--surf-iris); 
+}
+  
+  /* sizes */
+  .xs { 
+    font-size: 12px; 
+    padding: 5px 12px; 
+    gap: 5px; 
+}
+
+  .sm { 
+    font-size: 13px; 
+    padding: 7px 16px; 
+}
+
+  .md { 
+    font-size: 14px; 
+    padding: 10px 22px; 
+}
+
+  .lg { 
+    font-size: 15px; 
+    padding: 13px 30px; 
+}
+
+  
+  .full { 
+    width: 100%; 
+    justify-content: center; 
+}
+  
+  /* spinner */
+  .spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
