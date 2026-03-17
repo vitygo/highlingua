@@ -1,0 +1,222 @@
+.sidebar {
+    width: 256px;
+    flex-shrink: 0;
+    background: var(--sidebar-bg);
+    backdrop-filter: blur(32px) saturate(180%);
+    -webkit-backdrop-filter: blur(32px) saturate(180%);
+    border-right: 1px solid var(--b-1);
+    position: fixed;
+    top: 0; 
+    left: 0;
+    height: 100vh;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: var(--s-5) var(--s-3);
+    transition: transform var(--e-3), background var(--e-3), border-color var(--e-3);
+  }
+  
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+    padding: var(--s-2) var(--s-3) var(--s-6);
+    border-bottom: 1px solid var(--b-1);
+    margin-bottom: var(--s-3);
+  }
+  .brandMark {
+    width: 38px; height: 38px;
+    border-radius: var(--r-3);
+    background: var(--g-iris);
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    font-size: 18px;
+    box-shadow: var(--sh-iris);
+    flex-shrink: 0;
+    transition: transform var(--e-2);
+  }
+  .brand:hover .brandMark { 
+    transform: rotate(-6deg) scale(1.06); }
+
+  .brandText { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 1px; 
+}
+
+  .brandName {
+    font-family: var(--f-display);
+    font-size: 16px;
+    font-weight: 800;
+    background: var(--g-iris);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+  }
+  .brandTag {
+    font-size: 9.5px;
+    font-weight: 600;
+    color: var(--t-4);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  
+
+  .nav { 
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 2px; 
+}
+
+  .section {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--t-4);
+    padding: var(--s-4) var(--s-3) var(--s-2);
+    margin-top: var(--s-2);
+  }
+  .item {
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+    padding: 9px var(--s-3);
+    border-radius: var(--r-2);
+    font-family: var(--f-body);
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--t-3);
+    cursor: pointer;
+    position: relative;
+    transition: background var(--e-2), color var(--e-2), transform var(--e-2);
+    text-align: left;
+    width: 100%;
+    border: none;
+    background: none;
+  }
+  .item:hover {
+    background: var(--surf-1);
+    color: var(--t-1);
+    transform: translateX(2px);
+  }
+  .itemActive {
+    background: var(--surf-act) !important;
+    color: var(--t-1) !important;
+    font-weight: 600;
+  }
+  .itemIcon {
+    font-size: 13px;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+    opacity: 0.75;
+    font-style: normal;
+  }
+  .itemActive .itemIcon { 
+    opacity: 1; 
+    color: var(--iris-2); 
+}
+  .itemLabel { 
+    flex: 1; 
+}
+
+  .badge {
+    font-size: 10px;
+    font-weight: 800;
+    padding: 1px 7px;
+    border-radius: var(--r-pill);
+    background: rgba(112,101,217,0.2);
+    color: var(--iris-2);
+    border: 1px solid rgba(112,101,217,0.28);
+    line-height: 1.5;
+  }
+  .badgeAlert { 
+    background: rgba(240,84,124,0.18); 
+    color: var(--rose-2); 
+    border-color: rgba(240,84,124,0.3); 
+}
+
+  .activeBar {
+    position: absolute;
+    left: 0; 
+    top: 22%; 
+    bottom: 22%;
+    width: 3px;
+    background: var(--g-iris);
+    border-radius: 0 3px 3px 0;
+  }
+  
+  /* footer */
+  .footer { 
+    margin-top: auto; 
+    padding-top: var(--s-4); 
+}
+
+  .userCard {
+    background: var(--surf-iris);
+    border: 1px solid rgba(112,101,217,0.18);
+    border-radius: var(--r-4);
+    padding: var(--s-4);
+    transition: background var(--e-3), border-color var(--e-3);
+  }
+  .userTop {
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+    margin-bottom: var(--s-4);
+  }
+  .ava {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--g-iris);
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    font-size: 17px;
+    flex-shrink: 0;
+    box-shadow: var(--sh-iris);
+  }
+  .userInfo { 
+    flex: 1; 
+    min-width: 0; 
+}
+
+  .userName { 
+    font-size: 13px; 
+    font-weight: 700; 
+    color: var(--t-1); 
+}
+  .userMeta { 
+    font-size: 11px; 
+    color: var(--t-3); 
+    margin-top: 1px; 
+}
+
+  .gemCount {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--cobalt-2);
+    flex-shrink: 0;
+  }
+  
+  /* mobile */
+  @media (max-width: 900px) {
+    .sidebar { 
+        transform: translateX(-256px); 
+    }
+
+    .open { 
+        transform: translateX(0); 
+        box-shadow: var(--sh-lg); 
+    }
+  }
+  
