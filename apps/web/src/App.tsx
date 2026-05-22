@@ -12,6 +12,7 @@ const CollectionsPage = lazy(() => import('@/pages/CollectionsPage'))
 const StudyPage = lazy(() => import('@/pages/StudyPage'))
 const QuizPage = lazy(() => import('@/pages/QuizPage'))
 const StatsPage = lazy(() => import('@/pages/StatsPage'))
+const SettingsPage = lazy(() => import('@/pages/SettingsPage'))
 
 function AppRoutes() {
   const initAuth = useAuthStore((s) => s.initAuth)
@@ -37,6 +38,7 @@ function AppRoutes() {
         <Route path="/study" element={<StudyPage />} />
         <Route path="/quiz" element={<QuizPage />} />
         <Route path="/stats" element={<StatsPage />} />
+        <Route path="/settings" element={<SettingsPage />} />
 
       </Route>
       <Route path="*" element={<Navigate to="/dashboard" replace />} />

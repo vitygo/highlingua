@@ -16,7 +16,7 @@ export async function register(req: Request, res: Response): Promise<void> {
 
     const hashedPassword = await bcrypt.hash(password, 10)
     const user = await prisma.user.create({
-      data: { email, password: hashedPassword, name },
+      data: { email, password: hashedPassword, name, avatar: 'lingo' },
     })
 
     const accessToken = signAccessToken(user.id)
@@ -25,7 +25,7 @@ export async function register(req: Request, res: Response): Promise<void> {
     res.status(201).json({
       accessToken,
       refreshToken,
-      user: { id: user.id, email: user.email, name: user.name },
+      user: { id: user.id, email: user.email, name: user.name, avatar: user.avatar },
     })
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' })
@@ -54,7 +54,7 @@ export async function login(req: Request, res: Response): Promise<void> {
     res.json({
       accessToken,
       refreshToken,
-      user: { id: user.id, email: user.email, name: user.name },
+      user: { id: user.id, email: user.email, name: user.name, avatar: user.avatar },
     })
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' })
@@ -87,7 +87,7 @@ export async function getMe(req: Request, res: Response): Promise<void> {
     const userId = (req as any).userId
     const user = await prisma.user.findUnique({
       where: { id: userId },
-      select: { id: true, email: true, name: true, createdAt: true },
+      select: { id: true, email: true, name: true, avatar: true, createdAt: true },
     })
 
     if (!user) {

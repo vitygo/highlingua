@@ -1,10 +1,11 @@
 import { apiClient } from './client'
 
 export interface AuthUser {
-  id: string
-  email: string
-  name: string
-}
+    id: string
+    email: string
+    name: string
+    avatar: string
+  }
 
 export interface AuthResponse {
   accessToken: string

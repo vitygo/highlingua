@@ -6,6 +6,7 @@ interface AuthState {
   isAuthenticated: boolean
   isLoading: boolean
   setUser: (user: AuthUser) => void
+  updateUser: (data: Partial<AuthUser>) => void
   logout: () => void
   initAuth: () => Promise<void>
 }
@@ -16,6 +17,11 @@ export const useAuthStore = create<AuthState>((set) => ({
   isLoading: true,
 
   setUser: (user) => set({ user, isAuthenticated: true }),
+
+  updateUser: (data) =>
+    set((state) => ({
+      user: state.user ? { ...state.user, ...data } : null,
+    })),
 
   logout: () => {
     authApi.logout()

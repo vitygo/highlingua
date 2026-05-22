@@ -12,6 +12,7 @@ model User {
   email         String         @unique
   password      String
   name          String
+  avatar        String         @default("lingo")
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   collections   Collection[]
