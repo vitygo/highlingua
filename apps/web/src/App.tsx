@@ -7,6 +7,7 @@ import { Layout } from '@/components/Layout/Layout'
 const LoginPage = lazy(() => import('@/pages/LoginPage'))
 const RegisterPage = lazy(() => import('@/pages/RegisterPage'))
 const DashboardPage = lazy(() => import('@/pages/DashboardPage'))
+const GeneratePage = lazy(() => import('@/pages/GeneratePage'))
 
 function AppRoutes() {
   const initAuth = useAuthStore((s) => s.initAuth)
@@ -27,6 +28,7 @@ function AppRoutes() {
         }
       >
         <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/generate" element={<GeneratePage />} />
       </Route>
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>

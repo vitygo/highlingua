@@ -2,6 +2,8 @@ import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
 import authRoutes from '@/routes/auth.routes'
+import cardsRoutes from '@/routes/cards.routes'
+import collectionsRoutes from '@/routes/collections.routes'
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -17,7 +19,9 @@ app.get('/api/health', (_req, res) => {
 })
 
 app.use('/api/auth', authRoutes)
+app.use('/api/cards', cardsRoutes)
+app.use('/api/collections', collectionsRoutes)
 
 app.listen(PORT, () => {
-  console.log(`API running on http://localhost:${PORT}`)
+  console.log(`🚀 API running on http://localhost:${PORT}`)
 })
