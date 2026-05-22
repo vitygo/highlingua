@@ -2,9 +2,11 @@ import { useStudyStats } from '@/features/study'
 import { useCollections } from '@/features/cards'
 import styles from './StatsPage.module.css'
 
+
 export function StatsPage() {
   const { data: stats, isLoading } = useStudyStats()
   const { data: collectionsData } = useCollections()
+  const streak = stats?.streak ?? 0
 
   const collections = collectionsData?.collections ?? []
 
@@ -107,7 +109,7 @@ export function StatsPage() {
         <div className={styles.overviewGrid}>
           <div className={`${styles.overviewCard} ${styles.yellow}`}>
             <i className="ti ti-flame" aria-hidden="true" />
-            <div className={styles.overviewVal}>7</div>
+            <div className={styles.overviewVal}>{streak}</div>
             <div className={styles.overviewLabel}>Day streak</div>
           </div>
           <div className={styles.overviewCard}>
