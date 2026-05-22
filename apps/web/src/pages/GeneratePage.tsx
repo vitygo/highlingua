@@ -3,6 +3,7 @@ import { useGenerateCards, useSaveCards, useCollections, useCreateCollection } f
 import { GeneratedCard } from '@/api/cards'
 import { toast } from 'sonner'
 import styles from './GeneratePage.module.css'
+import { Select } from '@/components/Select/Select'
 
 const LANGUAGES = [
   { value: 'Ukrainian', label: 'Ukrainian' },
@@ -110,38 +111,29 @@ export function GeneratePage() {
       </div>
 
       <div className={styles.formCard}>
-        <div className={styles.langRow}>
-          <div className={styles.field}>
-            <label className={styles.label}>Native language</label>
-            <select
-              className={styles.select}
-              value={nativeLanguage}
-              onChange={(e) => setNativeLanguage(e.target.value)}
-            >
-              {LANGUAGES.map((l) => (
-                <option key={l.value} value={l.value}>{l.label}</option>
-              ))}
-            </select>
-          </div>
+      <div className={styles.langRow}>
+  <div className={styles.field}>
+    <label className={styles.label}>Native language</label>
+    <Select
+      options={LANGUAGES}
+      value={nativeLanguage}
+      onChange={setNativeLanguage}
+    />
+  </div>
 
-          <div className={styles.arrow}>
-            <i className="ti ti-arrow-right" aria-hidden="true" />
-          </div>
+  <div className={styles.arrow}>
+    <i className="ti ti-arrow-right" aria-hidden="true" />
+  </div>
 
-          <div className={styles.field}>
-            <label className={styles.label}>Target language</label>
-            <select
-              className={styles.select}
-              value={targetLanguage}
-              onChange={(e) => setTargetLanguage(e.target.value)}
-            >
-              {LANGUAGES.map((l) => (
-                <option key={l.value} value={l.value}>{l.label}</option>
-              ))}
-            </select>
-          </div>
-        </div>
-
+  <div className={styles.field}>
+    <label className={styles.label}>Target language</label>
+    <Select
+      options={LANGUAGES}
+      value={targetLanguage}
+      onChange={setTargetLanguage}
+    />
+  </div>
+</div>
         <div className={styles.field}>
           <label className={styles.label}>
             Words (comma separated, max 10)
@@ -234,18 +226,12 @@ export function GeneratePage() {
             <div className={styles.collectionPicker}>
               {!showNewCollection ? (
                 <>
-                  <select
-                    className={styles.select}
-                    value={collectionId}
-                    onChange={(e) => setCollectionId(e.target.value)}
-                  >
-                    <option value="">Select collection...</option>
-                    {collections.map((c) => (
-                      <option key={c.id} value={c.id}>
-                        {c.emoji} {c.name}
-                      </option>
-                    ))}
-                  </select>
+                  <Select
+  options={collections.map((c) => ({ value: c.id, label: `${c.emoji} ${c.name}` }))}
+  value={collectionId}
+  onChange={setCollectionId}
+  placeholder="Select collection..."
+/>
                   <button
                     className={styles.newColBtn}
                     onClick={() => setShowNewCollection(true)}

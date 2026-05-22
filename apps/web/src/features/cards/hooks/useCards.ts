@@ -10,6 +10,14 @@ export function useCollections() {
   })
 }
 
+export function useCollectionCards(id: string) {
+  return useQuery({
+    queryKey: ['collections', id, 'cards'],
+    queryFn: () => collectionsApi.getCards(id),
+    enabled: !!id,
+  })
+}
+
 export function useCreateCollection() {
   const queryClient = useQueryClient()
   return useMutation({
@@ -19,6 +27,31 @@ export function useCreateCollection() {
       toast.success('Collection created!')
     },
     onError: () => toast.error('Failed to create collection'),
+  })
+}
+
+export function useDeleteCollection() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: collectionsApi.remove,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['collections'] })
+      toast.success('Collection deleted!')
+    },
+    onError: () => toast.error('Failed to delete collection'),
+  })
+}
+
+export function useDeleteCard() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (cardId: string) =>
+      collectionsApi.deleteCard(cardId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['collections'] })
+      toast.success('Card deleted!')
+    },
+    onError: () => toast.error('Failed to delete card'),
   })
 }
 

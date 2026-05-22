@@ -1,0 +1,130 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  
+  .header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .createBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-green);
+    color: var(--color-black);
+    border: var(--border);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1.25rem;
+    font-size: 0.78rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  
+  .createBtn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .createBtn i {
+    font-size: 1rem;
+  }
+  
+  .title {
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+  }
+  
+  .sub {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--color-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.25rem;
+  }
+  
+  .createBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-green);
+    color: var(--color-black);
+    border: var(--border);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1.25rem;
+    font-size: 0.78rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    white-space: nowrap;
+  }
+  
+  .createBtn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .createBtn i {
+    font-size: 1rem;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+  
+  .loading {
+    font-size: 0.85rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--color-gray);
+  }
+  
+  .empty {
+    background: var(--color-white);
+    border: var(--border);
+    box-shadow: var(--shadow-lg);
+    border-radius: var(--radius-xl);
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+  }
+  
+  .emptyChar {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+  }
+  
+  .emptyTitle {
+    font-size: 1.4rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+  }
+  
+  .emptySub {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-gray);
+    text-transform: uppercase;
+  }

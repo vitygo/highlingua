@@ -27,6 +27,8 @@ createRoot(document.getElementById('root')!).render(
             boxShadow: '4px 4px 0 #1a1a1a',
             borderRadius: '8px',
             fontWeight: '700',
+                padding: '0.875rem 1rem'
+
           },
         }}
       />
