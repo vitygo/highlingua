@@ -1,0 +1,192 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  
+  .hero {
+    background: var( --color-pink);
+    border: var(--border);
+    box-shadow: var(--shadow-lg);
+    border-radius: var(--radius-xl);
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+  
+  .heroText {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .greeting {
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+  }
+  
+  .sub {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .studyBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-black);
+    color: var(--color-green);
+    border: var(--border);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-md);
+    padding: 0.65rem 1.25rem;
+    font-size: 0.75rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    margin-top: 0.25rem;
+    transition: transform 0.15s, box-shadow 0.15s;
+    width: fit-content;
+  }
+  
+  .studyBtn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .studyBtn i {
+    font-size: 1rem;
+  }
+  
+  .mascot {
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+  
+  .statsRow {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .statCard {
+    background: var(--color-white);
+    border: var(--border);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.25rem;
+  }
+  
+  .statCard.green {
+    background: var(--color-green);
+  }
+  
+  .statCard.yellow {
+    background: var(--color-yellow);
+  }
+  
+  .statVal {
+    font-size: 1.75rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+  }
+  
+  .statLabel {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #555;
+    margin-top: 0.2rem;
+  }
+  
+  .emptyState {
+    background: var(--color-white);
+    border: var(--border);
+    box-shadow: var(--shadow-lg);
+    border-radius: var(--radius-xl);
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+  }
+  
+  .emptyChar {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+  }
+  
+  .emptyTitle {
+    font-size: 1.4rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+  }
+  
+  .emptySub {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  
+  .generateBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-green);
+    color: var(--color-black);
+    border: var(--border);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1.5rem;
+    font-size: 0.8rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  
+  .generateBtn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .generateBtn i {
+    font-size: 1rem;
+  }
+  
+  @media (max-width: 768px) {
+    .statsRow {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .hero {
+      padding: 1.25rem;
+    }
+  
+    .greeting {
+      font-size: 1.4rem;
+    }
+  
+    .mascot {
+      width: 80px;
+      height: 80px;
+    }
+  }

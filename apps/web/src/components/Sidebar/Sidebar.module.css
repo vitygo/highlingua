@@ -1,0 +1,136 @@
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--color-black);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: sticky;
+    top: 0;
+    flex-shrink: 0;
+   
+  }
+  
+  .logo {
+    padding: 0 1.25rem;
+    height: 57px;
+    font-size: 1rem;
+    font-weight: 900;
+    color: var(--color-black);
+    background: var( --color-pink);
+    border-bottom: var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    padding: 2rem 1.25rem;
+  }
+  
+  .logo i {
+    font-size: 1.2rem;
+    color: var(--color-black);
+  
+  }
+  
+  .nav {
+    display: flex;
+    flex-direction: column;
+    padding: 0.75rem;
+    flex: 1;
+    gap: 0.4rem;
+  }
+  
+  .navItem {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.7rem 1rem;
+    color: #aaa;
+    font-size: 0.72rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: var(--radius-md);
+    border: 2px solid transparent;
+    transition: all 0.15s;
+  }
+  
+  .navItem i {
+    font-size: 1.1rem;
+  }
+  
+  .navItem:hover:not(.active) {
+    background: #2a2a2a;
+    color: var(--color-green);
+    border-color: #444;
+  }
+  
+  .navItem.active {
+    background: var(--color-green);
+    color: var(--color-black);
+    border: 2.5px solid var(--color-black);
+    box-shadow: 3px 3px 0 var(--color-green);
+  }
+  
+  .bottom {
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    border-top: 2px solid #333;
+  }
+  
+  .logoutBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.7rem 1rem;
+    color: #aaa;
+    font-size: 0.72rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: none;
+    border: 2px solid transparent;
+    border-radius: var(--radius-md);
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  
+  .logoutBtn:hover {
+    background: #2a2a2a;
+    color: #ff6b6b;
+    border-color: #444;
+  }
+  
+  .logoutBtn i {
+    font-size: 1.1rem;
+  }
+  
+  .overlay {
+    display: none;
+  }
+  
+  @media (max-width: 768px) {
+    .sidebar {
+      position: fixed;
+      left: -100%;
+      top: 0;
+      z-index: 100;
+      transition: left 0.25s;
+      min-height: 100dvh;
+    }
+  
+    .sidebar.open {
+      left: 0;
+    }
+  
+    .overlay {
+      display: block;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 99;
+    }
+  }
