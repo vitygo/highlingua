@@ -9,35 +9,10 @@
     align-items: flex-start;
     justify-content: space-between;
     gap: 1rem;
-    flex-wrap: wrap;
   }
   
-  .createBtn {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--color-green);
-    color: var(--color-black);
-    border: var(--border);
-    box-shadow: var(--shadow-md);
-    border-radius: var(--radius-md);
-    padding: 0.75rem 1.25rem;
-    font-size: 0.78rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: transform 0.15s, box-shadow 0.15s;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-  
-  .createBtn:hover {
-    transform: translate(-1px, -1px);
-    box-shadow: var(--shadow-lg);
-  }
-  
-  .createBtn i {
-    font-size: 1rem;
+  .headerText {
+    flex: 1;
   }
   
   .title {
@@ -72,6 +47,7 @@
     cursor: pointer;
     transition: transform 0.15s, box-shadow 0.15s;
     white-space: nowrap;
+    flex-shrink: 0;
   }
   
   .createBtn:hover {
@@ -127,4 +103,15 @@
     font-weight: 700;
     color: var(--color-gray);
     text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .header {
+      flex-wrap: wrap;
+    }
+  
+    .createBtn {
+      width: 100%;
+      justify-content: center;
+    }
   }

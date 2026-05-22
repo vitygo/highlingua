@@ -15,46 +15,46 @@ export function CollectionsPage() {
   const collections = data?.collections ?? []
 
   const handleDelete = (id: string) => {
-    toast.custom((t) => (
-        <div style={{
-          background: '#fff',
-          border: '2.5px solid #1a1a1a',
-          boxShadow: '4px 4px 0 #1a1a1a',
-          borderRadius: '8px',
-          padding: '1rem',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '0.75rem',
-          fontFamily: 'Arial Black',
-          width: '356px',
-        }}>
-          <p style={{ fontSize: '0.8rem', fontWeight: 900, textTransform: 'uppercase' }}>
-            Delete this collection?
-          </p>
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <button
-              onClick={() => { deleteCollection(id); toast.dismiss(t) }}
-              style={{
-                flex: 1, background: '#ffb3d9', border: '2px solid #1a1a1a',
-                borderRadius: '6px', padding: '0.5rem', fontWeight: 900,
-                fontSize: '0.72rem', textTransform: 'uppercase', cursor: 'pointer',
-              }}
-            >
-              Delete
-            </button>
-            <button
-              onClick={() => toast.dismiss(t)}
-              style={{
-                flex: 1, background: '#c8f55a', border: '2px solid #1a1a1a',
-                borderRadius: '6px', padding: '0.5rem', fontWeight: 900,
-                fontSize: '0.72rem', textTransform: 'uppercase', cursor: 'pointer',
-              }}
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      ), { style: { padding: 0, border: 'none', boxShadow: 'none', background: 'none' } })
+   toast.custom((t) => (
+  <div style={{
+    background: '#fff',
+    border: '2.5px solid #1a1a1a',
+    boxShadow: '4px 4px 0 #1a1a1a',
+    borderRadius: '8px',
+    padding: '1rem',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0.75rem',
+    fontFamily: 'Arial Black',
+    width: '356px',
+  }}>
+    <p style={{ fontSize: '0.8rem', fontWeight: 900, textTransform: 'uppercase' }}>
+      Delete this collection?
+    </p>
+    <div style={{ display: 'flex', gap: '0.5rem' }}>
+      <button
+        onClick={() => { deleteCollection(id); toast.dismiss(t) }}
+        style={{
+          flex: 1, background: '#ffb3d9', border: '2px solid #1a1a1a',
+          borderRadius: '6px', padding: '0.5rem', fontWeight: 900,
+          fontSize: '0.72rem', textTransform: 'uppercase', cursor: 'pointer',
+        }}
+      >
+        Delete
+      </button>
+      <button
+        onClick={() => toast.dismiss(t)}
+        style={{
+          flex: 1, background: '#c8f55a', border: '2px solid #1a1a1a',
+          borderRadius: '6px', padding: '0.5rem', fontWeight: 900,
+          fontSize: '0.72rem', textTransform: 'uppercase', cursor: 'pointer',
+        }}
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+), { style: { padding: 0, border: 'none', boxShadow: 'none', background: 'none' } })
   }
 
   return (
