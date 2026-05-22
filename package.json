@@ -2,14 +2,15 @@
     "name": "highlingua",
     "private": true,
     "workspaces": [
-      "apps/*",
-      "packages/*"
+        "apps/*",
+        "packages/*"
     ],
     "scripts": {
-      "dev": "concurrently \"npm run dev --workspace=apps/api\" \"npm run dev --workspace=apps/web\"",
-      "build": "npm run build --workspace=apps/web"
+        "dev": "concurrently \"npm run dev --workspace=apps/api\" \"npm run dev --workspace=apps/web\"",
+        "build": "npm run build --workspace=apps/web"
     },
     "devDependencies": {
-      "concurrently": "^8.2.0"
+        "concurrently": "^8.2.0",
+        "tsconfig-paths": "^4.2.0"
     }
-  }
+}
