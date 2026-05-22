@@ -190,3 +190,53 @@
       height: 80px;
     }
   }
+
+  .sectionTitle {
+    font-size: 1rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.875rem;
+  }
+  
+  .collectionsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.875rem;
+  }
+  
+  .colCard {
+    background: var(--color-white);
+    border: var(--border);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  
+  .colCard:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .colEmoji {
+    font-size: 1.5rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  .colName {
+    font-size: 0.85rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.3px;
+    margin-bottom: 0.2rem;
+  }
+  
+  .colCount {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--color-gray);
+    text-transform: uppercase;
+  }
