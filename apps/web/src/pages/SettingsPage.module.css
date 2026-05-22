@@ -1,11 +1,14 @@
 .page {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
     gap: 1.25rem;
-    max-width: 600px;
+    width: 100%;
+    align-items: start;
   }
   
   .title {
+    grid-column: 1 / -1;
     font-size: 1.8rem;
     font-weight: 900;
     letter-spacing: -1px;
@@ -13,12 +16,13 @@
   }
   
   .sub {
+    grid-column: 1 / -1;
     font-size: 0.72rem;
     font-weight: 700;
     color: var(--color-gray);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin-top: -0.75rem;
+    margin-top: -1rem;
   }
   
   .card {
@@ -166,3 +170,13 @@
       grid-template-columns: repeat(2, 1fr);
     }
   }
+  @media (max-width: 768px) {
+    .page {
+      grid-template-columns: 1fr;
+    }
+  
+    .title, .sub {
+      grid-column: 1;
+    }
+  }
+  

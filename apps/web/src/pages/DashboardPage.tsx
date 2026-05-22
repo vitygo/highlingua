@@ -27,7 +27,7 @@ export function DashboardPage() {
           </button>
         </div>
         <img
-          src="/characters/lingo.png"
+          src="/characters/im5.png"
           alt="Lingo"
           className={styles.mascot}
         />
@@ -73,20 +73,30 @@ export function DashboardPage() {
         <div>
           <h2 className={styles.sectionTitle}>My collections</h2>
           <div className={styles.collectionsGrid}>
-            {collections.slice(0, 4).map((col) => (
-              <div
-                key={col.id}
-                className={styles.colCard}
-                onClick={() => navigate('/collections')}
-              >
-                <span className={styles.colEmoji}>{col.emoji}</span>
-                <div className={styles.colName}>{col.name}</div>
-                <div className={styles.colCount}>
-  {col._count.cards} {col._count.cards === 1 ? 'card' : 'cards'}
+  {collections.slice(0, 4).map((col, index) => {
+    const colors = ['#c8f55a', '#ffe44d', '#ffb3d9', '#fff']
+    const bg = colors[index % colors.length]
+    return (
+      <div
+        key={col.id}
+        className={styles.colCard}
+        style={{ background: bg }}
+        onClick={() => navigate('/collections')}
+      >
+        <div className={styles.colTop}>
+          <span className={styles.colEmoji}>{col.emoji}</span>
+          <span className={styles.colBadge}>
+            {col._count.cards} {col._count.cards === 1 ? 'card' : 'cards'}
+          </span>
+        </div>
+        <div className={styles.colName}>{col.name}</div>
+        <div className={styles.colAction}>
+          View cards <i className="ti ti-arrow-right" aria-hidden="true" />
+        </div>
+      </div>
+    )
+  })}
 </div>
-              </div>
-            ))}
-          </div>
         </div>
       )}
     </div>

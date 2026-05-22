@@ -10,11 +10,11 @@ import { WordOrder } from '@/features/quiz/components/WordOrder'
 import styles from './QuizPage.module.css'
 
 const MODES = [
-  { value: 'multiple_choice', label: 'Multiple choice', icon: 'ti-list', desc: 'Choose correct translation' },
-  { value: 'write_translation', label: 'Write translation', icon: 'ti-pencil', desc: 'Type the answer' },
-  { value: 'fill_gap', label: 'Fill the gap', icon: 'ti-text-size', desc: 'Complete the sentence' },
-  { value: 'word_order', label: 'Word order', icon: 'ti-arrows-sort', desc: 'Arrange the words' },
-]
+    { value: 'multiple_choice', label: 'Multiple choice', icon: 'ti-list', desc: 'Choose correct translation', img: '/characters/im3.png', bg: '#c8f55a' },
+    { value: 'write_translation', label: 'Write translation', icon: 'ti-pencil', desc: 'Type the answer', img: '/characters/im1.png', bg: '#ffb3d9' },
+    { value: 'fill_gap', label: 'Fill the gap', icon: 'ti-text-size', desc: 'Complete the sentence', img: '/characters/im4.png', bg: '#ffe44d' },
+    { value: 'word_order', label: 'Word order', icon: 'ti-arrows-sort', desc: 'Arrange the words', img: '/characters/im2.png', bg: '#fff' },
+  ]
 
 export function QuizPage() {
   const [mode, setMode] = useState('multiple_choice')
@@ -124,15 +124,17 @@ export function QuizPage() {
 
   <div className={styles.modesGrid}>
     {MODES.map((m) => (
-      <div
-        key={m.value}
-        className={`${styles.modeCard} ${mode === m.value ? styles.modeSelected : ''}`}
-        onClick={() => setMode(m.value)}
-      >
-        <i className={`ti ${m.icon} ${styles.modeIcon}`} aria-hidden="true" />
-        <div className={styles.modeLabel}>{m.label}</div>
-        <div className={styles.modeDesc}>{m.desc}</div>
-      </div>
+     <div
+     key={m.value}
+     className={`${styles.modeCard} ${mode === m.value ? styles.modeSelected : ''}`}
+     onClick={() => setMode(m.value)}
+     style={{ background: mode === m.value ? m.bg : m.bg }}
+   >
+     <img src={m.img} alt={m.label} className={styles.modeCharacter} />
+     <i className={`ti ${m.icon} ${styles.modeIcon}`} aria-hidden="true" />
+     <div className={styles.modeLabel}>{m.label}</div>
+     <div className={styles.modeDesc}>{m.desc}</div>
+   </div>
     ))}
   </div>
 </div>

@@ -22,7 +22,7 @@ export function StatsPage() {
 
       <div className={styles.topRow}>
         <div className={`${styles.bigStat} ${styles.green}`}>
-          <img src="/characters/Trophy.png" alt="Trophy" className={styles.statChar} />
+          <img src="/characters/trophy.png" alt="Trophy" className={styles.statChar} />
           <div className={styles.bigVal}>{stats?.learnedCards ?? 0}</div>
           <div className={styles.bigLabel}>Words learned</div>
         </div>

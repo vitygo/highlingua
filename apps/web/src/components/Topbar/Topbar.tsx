@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/authStore'
+import { useStudyStats } from '@/features/study'
 import { toast } from 'sonner'
 import styles from './Topbar.module.css'
 
@@ -17,6 +18,8 @@ interface TopbarProps {
 
 export function Topbar({ onMenuClick }: TopbarProps) {
   const user = useAuthStore((s) => s.user)
+  const { data: stats } = useStudyStats()
+  const streak = stats?.streak ?? 0
   const logout = useAuthStore((s) => s.logout)
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
@@ -51,10 +54,12 @@ export function Topbar({ onMenuClick }: TopbarProps) {
       </button>
 
       <div className={styles.right}>
-        <div className={styles.streak}>
-          <i className="ti ti-flame" aria-hidden="true" />
-          7-day streak
-        </div>
+      {streak > 0 && (
+  <div className={styles.streak}>
+    <i className="ti ti-flame" aria-hidden="true" />
+    {streak}-day streak
+  </div>
+)}
 
         <div className={styles.avatarWrap} ref={ref}>
           <button

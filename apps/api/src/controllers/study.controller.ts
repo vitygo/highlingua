@@ -117,48 +117,80 @@ export async function rateCard(req: AuthRequest, res: Response): Promise<void> {
 }
 
 export async function getStats(req: AuthRequest, res: Response): Promise<void> {
-  try {
-    const userId = req.userId!
-
-    const totalCards = await prisma.card.count({
-      where: { collection: { userId } },
-    })
-
-    const learnedCards = await prisma.cardProgress.count({
-      where: { userId, repetitions: { gte: 3 } },
-    })
-
-    const collections = await prisma.collection.count({
-      where: { userId },
-    })
-
-    const sessions = await prisma.studySession.findMany({
-      where: { userId },
-      orderBy: { createdAt: 'desc' },
-      take: 100,
-    })
-
-    const totalCorrect = sessions.reduce((sum, s) => sum + s.correct, 0)
-    const totalIncorrect = sessions.reduce((sum, s) => sum + s.incorrect, 0)
-    const accuracy = totalCorrect + totalIncorrect > 0
-      ? Math.round((totalCorrect / (totalCorrect + totalIncorrect)) * 100)
-      : 0
-
-    const dueCards = await prisma.cardProgress.count({
-      where: {
-        userId,
-        nextReviewAt: { lte: new Date() },
-      },
-    })
-
-    res.json({
-      totalCards,
-      learnedCards,
-      collections,
-      accuracy,
-      dueCards,
-    })
-  } catch {
-    res.status(500).json({ error: 'Internal server error' })
+    try {
+      const userId = req.userId!
+  
+      const totalCards = await prisma.card.count({
+        where: { collection: { userId } },
+      })
+  
+      const learnedCards = await prisma.cardProgress.count({
+        where: { userId, repetitions: { gte: 3 } },
+      })
+  
+      const collections = await prisma.collection.count({
+        where: { userId },
+      })
+  
+      const sessions = await prisma.studySession.findMany({
+        where: { userId },
+        orderBy: { createdAt: 'desc' },
+        take: 100,
+      })
+  
+      const totalCorrect = sessions.reduce((sum, s) => sum + s.correct, 0)
+      const totalIncorrect = sessions.reduce((sum, s) => sum + s.incorrect, 0)
+      const accuracy = totalCorrect + totalIncorrect > 0
+        ? Math.round((totalCorrect / (totalCorrect + totalIncorrect)) * 100)
+        : 0
+  
+      const dueCards = await prisma.cardProgress.count({
+        where: {
+          userId,
+          nextReviewAt: { lte: new Date() },
+        },
+      })
+  
+      const streak = calculateStreak(sessions.map(s => s.createdAt))
+  
+      res.json({
+        totalCards,
+        learnedCards,
+        collections,
+        accuracy,
+        dueCards,
+        streak,
+      })
+    } catch {
+      res.status(500).json({ error: 'Internal server error' })
+    }
   }
-}
+  
+  function calculateStreak(dates: Date[]): number {
+    if (dates.length === 0) return 0
+  
+    const uniqueDays = [...new Set(
+      dates.map(d => new Date(d).toISOString().split('T')[0])
+    )].sort().reverse()
+  
+    if (uniqueDays.length === 0) return 0
+  
+    const today = new Date().toISOString().split('T')[0]
+    const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]
+  
+    if (uniqueDays[0] !== today && uniqueDays[0] !== yesterday) return 0
+  
+    let streak = 1
+    for (let i = 1; i < uniqueDays.length; i++) {
+      const curr = new Date(uniqueDays[i - 1])
+      const prev = new Date(uniqueDays[i])
+      const diff = (curr.getTime() - prev.getTime()) / 86400000
+      if (diff === 1) {
+        streak++
+      } else {
+        break
+      }
+    }
+  
+    return streak
+  }

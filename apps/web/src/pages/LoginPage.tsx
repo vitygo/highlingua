@@ -27,7 +27,7 @@ export function LoginPage() {
     <div className={styles.page}>
       <div className={styles.card}>
         <div className={styles.mascot}>
-          <img src="/characters/Memo.png" alt="Lingo" />
+          <img src="/characters/memo.png" alt="Lingo" />
         </div>
         <h1 className={styles.title}>Welcome back!</h1>
         <p className={styles.subtitle}>Log in to continue learning</p>

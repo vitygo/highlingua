@@ -75,13 +75,13 @@ export function StudyPage() {
 
       {cards.length === 0 ? (
         <div className={styles.empty}>
-          <img src="/characters/Memo.png" alt="Memo" className={styles.emptyChar} />
+          <img src="/characters/memo.png" alt="Memo" className={styles.emptyChar} />
           <h2 className={styles.emptyTitle}>No cards to study!</h2>
           <p className={styles.emptySub}>Generate some cards first</p>
         </div>
       ) : finished ? (
         <div className={styles.finished}>
-          <img src="/characters/Trophy.png" alt="Trophy" className={styles.finishedChar} />
+          <img src="/characters/trophy.png" alt="Trophy" className={styles.finishedChar} />
           <h2 className={styles.finishedTitle}>Session complete!</h2>
           <p className={styles.finishedSub}>You studied {cards.length} cards</p>
           <button className={styles.restartBtn} onClick={handleRestart}>

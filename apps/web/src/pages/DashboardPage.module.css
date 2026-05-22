@@ -67,8 +67,7 @@
   }
   
   .mascot {
-    width: 110px;
-    height: 110px;
+    height: 200px;
     object-fit: contain;
     flex-shrink: 0;
   }
@@ -239,4 +238,70 @@
     font-weight: 700;
     color: var(--color-gray);
     text-transform: uppercase;
+  }
+  .collectionsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.875rem;
+  }
+  
+  .colCard {
+    border: var(--border);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-xl);
+    padding: 1.25rem;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-height: 140px;
+  }
+  
+  .colCard:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .colTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .colEmoji {
+    font-size: 2rem;
+  }
+  
+  .colBadge {
+    font-size: 0.65rem;
+    font-weight: 900;
+    background: rgba(0,0,0,0.08);
+    border: 1.5px solid rgba(0,0,0,0.15);
+    border-radius: var(--radius-sm);
+    padding: 0.2rem 0.6rem;
+    text-transform: uppercase;
+  }
+  
+  .colName {
+    font-size: 1rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.3px;
+    flex: 1;
+  }
+  
+  .colAction {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.68rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #555;
+    letter-spacing: 0.03em;
+  }
+  
+  .colAction i {
+    font-size: 0.8rem;
   }

@@ -2,9 +2,8 @@
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    max-width: 900px;
+    width: 100%;
   }
-  
   .title {
     font-size: 1.8rem;
     font-weight: 900;
@@ -20,14 +19,12 @@
     letter-spacing: 0.05em;
     margin-top: -0.75rem;
   }
-  
   .setupLayout {
     display: grid;
-    grid-template-columns: 280px 1fr;
+    grid-template-columns: 390px 1fr;
     gap: 1rem;
     align-items: start;
   }
-  
   
   .modesGrid {
     display: grid;
@@ -40,14 +37,16 @@
     border: var(--border);
     box-shadow: var(--shadow-md);
     border-radius: var(--radius-xl);
-    padding: 1.5rem 1.25rem;
+    padding: 1.75rem 1.5rem;
     cursor: pointer;
     transition: transform 0.15s, box-shadow 0.15s;
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
-    min-height: 140px;
-    justify-content: center;
+    gap: 0.5rem;
+    min-height: 200px;
+    justify-content: flex-end;
+    position: relative;
+    overflow: hidden;
   }
   
   .modeCard:hover {
@@ -64,16 +63,15 @@
     font-size: 1.8rem;
     margin-bottom: 0.25rem;
   }
-  
   .modeLabel {
-    font-size: 0.9rem;
+    font-size: 1.1rem;
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: -0.3px;
   }
   
   .modeDesc {
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     font-weight: 700;
     color: #555;
     text-transform: uppercase;
@@ -377,4 +375,13 @@
     .modesGrid {
       grid-template-columns: 1fr;
     }
+  }
+  .modeCharacter {
+    position: absolute;
+    top: -15px;
+    right: 10px;
+    width: 160px;
+    height: 160px;
+    object-fit: contain;
+    opacity: 0.95;
   }

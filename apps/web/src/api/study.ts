@@ -16,12 +16,13 @@ export interface StudyCard {
 }
 
 export interface StudyStats {
-  totalCards: number
-  learnedCards: number
-  collections: number
-  accuracy: number
-  dueCards: number
-}
+    totalCards: number
+    learnedCards: number
+    collections: number
+    accuracy: number
+    dueCards: number
+    streak: number
+  }
 
 export const studyApi = {
   getCards: async (collectionId?: string): Promise<{ cards: StudyCard[] }> => {

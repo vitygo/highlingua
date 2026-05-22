@@ -15,8 +15,8 @@
     height: 57px;
     font-size: 1rem;
     font-weight: 900;
-    color: var(--color-black);
-    background: var( --color-pink);
+    color: var(--color-pink);
+    background: var( --color-dark);
     border-bottom: var(--border);
     display: flex;
     align-items: center;
@@ -28,7 +28,7 @@
   
   .logo i {
     font-size: 1.2rem;
-    color: var(--color-black);
+    color: var(--color-pink);
   
   }
   
