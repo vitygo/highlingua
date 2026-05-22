@@ -4,7 +4,7 @@ import cors from 'cors'
 import authRoutes from '@/routes/auth.routes'
 import cardsRoutes from '@/routes/cards.routes'
 import collectionsRoutes from '@/routes/collections.routes'
-
+import studyRoutes from '@/routes/study.routes'
 const app = express()
 const PORT = process.env.PORT || 3001
 
@@ -21,6 +21,7 @@ app.get('/api/health', (_req, res) => {
 app.use('/api/auth', authRoutes)
 app.use('/api/cards', cardsRoutes)
 app.use('/api/collections', collectionsRoutes)
+app.use('/api/study', studyRoutes)
 
 app.listen(PORT, () => {
   console.log(`🚀 API running on http://localhost:${PORT}`)

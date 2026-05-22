@@ -1,0 +1,381 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: 680px;
+  }
+  
+  .header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  
+  .title {
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+  }
+  
+  .sub {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--color-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.25rem;
+  }
+  
+  .filter {
+    width: 220px;
+    flex-shrink: 0;
+  }
+  
+  .progress {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .progressBar {
+    flex: 1;
+    height: 10px;
+    background: var(--color-white);
+    border: var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  
+  .progressFill {
+    height: 100%;
+    background: var(--color-green);
+    border-radius: 20px;
+    transition: width 0.3s ease;
+  }
+  
+  .progressText {
+    font-size: 0.75rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  
+  .cardWrap {
+    perspective: 1000px;
+  }
+  
+  .flashcard {
+    background: var(--color-white);
+    border: var(--border);
+    box-shadow: var(--shadow-xl);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    min-height: 320px;
+    cursor: pointer;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .flipped {
+    transform: rotateY(180deg);
+  }
+  
+  .cardFront,
+  .cardBack {
+    position: absolute;
+    inset: 0;
+    padding: 2rem;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-xl);
+  }
+  
+  .cardBack {
+    transform: rotateY(180deg);
+    background: var(--color-yellow);
+  }
+  
+  .cardLevel {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .levelBadge {
+    font-size: 0.65rem;
+    font-weight: 900;
+    background: var(--color-black);
+    color: var(--color-green);
+    border-radius: var(--radius-sm);
+    padding: 0.2rem 0.6rem;
+    text-transform: uppercase;
+  }
+  
+  .posBadge {
+    font-size: 0.65rem;
+    font-weight: 900;
+    background: var(--color-green);
+    color: var(--color-black);
+    border: var(--border-thin);
+    border-radius: var(--radius-sm);
+    padding: 0.2rem 0.6rem;
+    text-transform: uppercase;
+  }
+  
+  .cardWord {
+    font-size: 2.5rem;
+    font-weight: 900;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  
+  .tapHint {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--color-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .tapHint i {
+    font-size: 1rem;
+  }
+  
+  .cardTranslation {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    color: var(--color-black);
+    margin-bottom: 0.75rem;
+  }
+  
+  .cardExplanation {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+  }
+  
+  .example {
+    border-left: 3px solid var(--color-black);
+    padding-left: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .exSentence {
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1.4;
+  }
+  
+  .exTrans {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #555;
+    margin-top: 0.2rem;
+  }
+  
+  .synonyms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-top: auto;
+  }
+  
+  .syn {
+    font-size: 0.65rem;
+    font-weight: 900;
+    background: rgba(0,0,0,0.08);
+    border: 1.5px solid var(--color-black);
+    border-radius: var(--radius-sm);
+    padding: 0.15rem 0.5rem;
+    text-transform: uppercase;
+  }
+  
+  .ratingBtns {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.75rem;
+  }
+  
+  .rateBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: var(--border);
+    border-radius: var(--radius-lg);
+    padding: 0.875rem;
+    font-size: 0.82rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  
+  .rateBtn:hover:not(:disabled) {
+    transform: translate(-2px, -2px);
+  }
+  
+  .rateBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  .rateBtn i {
+    font-size: 1.1rem;
+  }
+  
+  .repeatBtn {
+    background: var(--color-pink);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .repeatBtn:hover:not(:disabled) {
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .hardBtn {
+    background: var(--color-yellow);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .hardBtn:hover:not(:disabled) {
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .easyBtn {
+    background: var(--color-green);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .easyBtn:hover:not(:disabled) {
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .loading {
+    font-size: 0.85rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--color-gray);
+  }
+  
+  .empty {
+    background: var(--color-white);
+    border: var(--border);
+    box-shadow: var(--shadow-lg);
+    border-radius: var(--radius-xl);
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+  }
+  
+  .emptyChar {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+  }
+  
+  .emptyTitle {
+    font-size: 1.4rem;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+  
+  .emptySub {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-gray);
+    text-transform: uppercase;
+  }
+  
+  .finished {
+    background: var(--color-white);
+    border: var(--border);
+    box-shadow: var(--shadow-xl);
+    border-radius: var(--radius-xl);
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+  }
+  
+  .finishedChar {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+  }
+  
+  .finishedTitle {
+    font-size: 1.8rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+  }
+  
+  .finishedSub {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-gray);
+    text-transform: uppercase;
+  }
+  
+  .restartBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-green);
+    border: var(--border);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1.5rem;
+    font-size: 0.82rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: transform 0.15s;
+  }
+  
+  .restartBtn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  @media (max-width: 600px) {
+    .header {
+      flex-direction: column;
+    }
+  
+    .filter {
+      width: 100%;
+    }
+  
+    .cardWord {
+      font-size: 1.8rem;
+    }
+  
+    .cardTranslation {
+      font-size: 1.5rem;
+    }
+  }
