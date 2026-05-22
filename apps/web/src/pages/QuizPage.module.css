@@ -1,0 +1,380 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: 900px;
+  }
+  
+  .title {
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+  }
+  
+  .sub {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--color-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: -0.75rem;
+  }
+  
+  .setupLayout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+  
+  
+  .modesGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .modeCard {
+    background: var(--color-white);
+    border: var(--border);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-xl);
+    padding: 1.5rem 1.25rem;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    min-height: 140px;
+    justify-content: center;
+  }
+  
+  .modeCard:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .modeSelected {
+    background: var(--color-green);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .modeIcon {
+    font-size: 1.8rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .modeLabel {
+    font-size: 0.9rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.3px;
+  }
+  
+  .modeDesc {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  
+  .modeSelected .modeDesc {
+    color: #333;
+  }
+  
+  .setupSide {
+    position: sticky;
+    top: 1rem;
+    align-self: stretch;
+  }
+  
+  .setupCard {
+    background: var(--color-white);
+    border: var(--border);
+    box-shadow: var(--shadow-lg);
+    border-radius: var(--radius-xl);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+  }
+  
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  
+  .label {
+    font-size: 0.7rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .selectedMode {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-bg);
+    border: var(--border-thin);
+    border-radius: var(--radius-md);
+    padding: 0.6rem 0.875rem;
+  }
+  
+  .selectedModeLabel {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--color-gray);
+    text-transform: uppercase;
+  }
+  
+  .selectedModeName {
+    font-size: 0.78rem;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+  
+  .startBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--color-black);
+    color: var(--color-green);
+    border: var(--border);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-md);
+    padding: 0.875rem;
+    font-size: 0.85rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  
+  .startBtn:hover:not(:disabled) {
+    transform: translate(-1px, -1px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .startBtn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
+  .startBtn i {
+    font-size: 1rem;
+  }
+  
+  .quizHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .exitQuizBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--color-white);
+    border: var(--border);
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-md);
+    padding: 0.5rem 0.875rem;
+    font-size: 0.72rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: transform 0.15s;
+  }
+  
+  .exitQuizBtn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .progress {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .progressBar {
+    flex: 1;
+    height: 10px;
+    background: var(--color-white);
+    border: var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  
+  .progressFill {
+    height: 100%;
+    background: var(--color-green);
+    border-radius: 20px;
+    transition: width 0.3s ease;
+  }
+  
+  .progressText {
+    font-size: 0.75rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  
+  .scorePill {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: var(--color-yellow);
+    border: var(--border);
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-sm);
+    padding: 0.4rem 0.875rem;
+    font-size: 0.8rem;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+  
+  .scorePill i {
+    font-size: 0.9rem;
+    color: #f57f17;
+  }
+  
+  .questionWrap {
+    flex: 1;
+  }
+  
+  .results {
+    background: var(--color-white);
+    border: var(--border);
+    box-shadow: var(--shadow-xl);
+    border-radius: var(--radius-xl);
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+  }
+  
+  .resultChar {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+  }
+  
+  .resultTitle {
+    font-size: 1.8rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+  }
+  
+  .scoreDisplay {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+  }
+  
+  .scoreBig {
+    font-size: 4rem;
+    font-weight: 900;
+    letter-spacing: -3px;
+  }
+  
+  .scoreTotal {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--color-gray);
+  }
+  
+  .scorePercent {
+    font-size: 0.8rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--color-gray);
+    background: var(--color-bg);
+    border: var(--border-thin);
+    border-radius: var(--radius-sm);
+    padding: 0.3rem 0.75rem;
+  }
+  
+  .resultBtns {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+  
+  .exitBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-white);
+    border: var(--border);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1.5rem;
+    font-size: 0.82rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  
+  .exitBtn:hover {
+    transform: translate(-1px, -1px);
+  }
+  
+  .restartBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-green);
+    border: var(--border);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1.5rem;
+    font-size: 0.82rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  
+  .restartBtn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  @media (max-width: 768px) {
+    .setupLayout {
+      grid-template-columns: 1fr;
+    }
+  
+    .setupSide {
+      position: static;
+    }
+  
+    .modesGrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .modeCard {
+      aspect-ratio: auto;
+      padding: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .modesGrid {
+      grid-template-columns: 1fr;
+    }
+  }
