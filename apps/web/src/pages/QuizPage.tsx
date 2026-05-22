@@ -200,19 +200,19 @@ export function QuizPage() {
       </div>
 
       <div className={styles.questionWrap}>
-        {currentQuestion?.mode === 'multiple_choice' && (
-          <MultipleChoice question={currentQuestion} onAnswer={handleAnswer} />
-        )}
-        {currentQuestion?.mode === 'write_translation' && (
-          <WriteTranslation question={currentQuestion} onAnswer={handleAnswer} />
-        )}
-        {currentQuestion?.mode === 'fill_gap' && (
-          <FillGap question={currentQuestion} onAnswer={handleAnswer} />
-        )}
-        {currentQuestion?.mode === 'word_order' && (
-          <WordOrder question={currentQuestion} onAnswer={handleAnswer} />
-        )}
-      </div>
+  {currentQuestion?.mode === 'multiple_choice' && (
+    <MultipleChoice key={currentIndex} question={currentQuestion} onAnswer={handleAnswer} />
+  )}
+  {currentQuestion?.mode === 'write_translation' && (
+    <WriteTranslation key={currentIndex} question={currentQuestion} onAnswer={handleAnswer} />
+  )}
+  {currentQuestion?.mode === 'fill_gap' && (
+    <FillGap key={currentIndex} question={currentQuestion} onAnswer={handleAnswer} />
+  )}
+  {currentQuestion?.mode === 'word_order' && (
+    <WordOrder key={currentIndex} question={currentQuestion} onAnswer={handleAnswer} />
+  )}
+</div>
     </div>
   )
 }

@@ -16,6 +16,17 @@ const LANGUAGES = [
   { value: 'Portuguese', label: 'Portuguese' },
 ]
 
+const PLACEHOLDERS: Record<string, string> = {
+  Ukrainian: 'аеропорт, багаж, посадковий талон...',
+  English: 'airport, luggage, boarding pass...',
+  Spanish: 'aeropuerto, equipaje, tarjeta de embarque...',
+  French: 'aéroport, bagages, carte d\'embarquement...',
+  German: 'Flughafen, Gepäck, Bordkarte...',
+  Polish: 'lotnisko, bagaż, karta pokładowa...',
+  Italian: 'aeroporto, bagaglio, carta d\'imbarco...',
+  Portuguese: 'aeroporto, bagagem, cartão de embarque...',
+}
+
 const LEVEL_COLORS: Record<string, string> = {
   A1: styles.levelA1,
   A2: styles.levelA2,
@@ -113,11 +124,11 @@ export function GeneratePage() {
       <div className={styles.formCard}>
       <div className={styles.langRow}>
   <div className={styles.field}>
-    <label className={styles.label}>Native language</label>
+    <label className={styles.label}>Target language (learning)</label>
     <Select
       options={LANGUAGES}
-      value={nativeLanguage}
-      onChange={setNativeLanguage}
+      value={targetLanguage}
+      onChange={setTargetLanguage}
     />
   </div>
 
@@ -126,11 +137,11 @@ export function GeneratePage() {
   </div>
 
   <div className={styles.field}>
-    <label className={styles.label}>Target language</label>
+    <label className={styles.label}>Native language (translation)</label>
     <Select
       options={LANGUAGES}
-      value={targetLanguage}
-      onChange={setTargetLanguage}
+      value={nativeLanguage}
+      onChange={setNativeLanguage}
     />
   </div>
 </div>
@@ -139,12 +150,12 @@ export function GeneratePage() {
             Words (comma separated, max 10)
           </label>
           <textarea
-            className={styles.textarea}
-            placeholder="airport, luggage, boarding pass, departure..."
-            value={words}
-            onChange={(e) => setWords(e.target.value)}
-            rows={3}
-          />
+  className={styles.textarea}
+  placeholder={PLACEHOLDERS[targetLanguage] ?? 'Enter words...'}
+  value={words}
+  onChange={(e) => setWords(e.target.value)}
+  rows={3}
+/>
           <span className={styles.hint}>
             {words.split(',').filter((w) => w.trim()).length} / 10 words
           </span>
@@ -271,8 +282,7 @@ export function GeneratePage() {
               onClick={handleSave}
               disabled={isSaving || selectedCards.size === 0}
             >
-              {isSaving ? 'Saving...' : `Save ${selectedCards.size} cards`}
-              <i className="ti ti-download" aria-hidden="true" />
+              {isSaving ? 'Saving...' : `Add ${selectedCards.size} cards`}
             </button>
           </div>
         </>
