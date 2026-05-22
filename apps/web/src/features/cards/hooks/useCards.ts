@@ -73,3 +73,28 @@ export function useSaveCards() {
     onError: () => toast.error('Failed to save cards'),
   })
 }
+
+export function useCreateCard() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: collectionsApi.createCard,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['collections'] })
+      toast.success('Card created!')
+    },
+    onError: () => toast.error('Failed to create card'),
+  })
+}
+
+export function useUpdateCard() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ cardId, data }: { cardId: string; data: any }) =>
+      collectionsApi.updateCard(cardId, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['collections'] })
+      toast.success('Card updated!')
+    },
+    onError: () => toast.error('Failed to update card'),
+  })
+}

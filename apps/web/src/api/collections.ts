@@ -45,4 +45,23 @@ export const collectionsApi = {
   deleteCard: async (cardId: string): Promise<void> => {
     await apiClient.delete(`/collections/cards/${cardId}`)
   },
+
+  createCard: async (data: {
+    collectionId: string
+    word: string
+    translation: string
+    explanation: string
+    partOfSpeech: string
+    level: string
+    synonyms: string[]
+    examples: { sentence: string; translation: string }[]
+  }): Promise<{ card: Card }> => {
+    const res = await apiClient.post('/cards', data)
+    return res.data
+  },
+
+  updateCard: async (cardId: string, data: Partial<Card>): Promise<{ card: Card }> => {
+    const res = await apiClient.put(`/cards/${cardId}`, data)
+    return res.data
+  },
 }

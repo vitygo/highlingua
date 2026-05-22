@@ -102,6 +102,47 @@
   .deleteBtn:hover {
     background: var(--color-pink);
   }
+
+  .editBtn {
+    background: var(--color-yellow);
+    border: var(--border-thin);
+    border-radius: var(--radius-sm);
+    padding: 0.3rem 0.4rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  
+  .editBtn:hover {
+    background: var(--color-green);
+  }
+  
+  .headerBtns {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .addBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--color-green);
+    border: var(--border);
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-md);
+    padding: 0.5rem 0.875rem;
+    font-size: 0.72rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  
+  .addBtn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: var(--shadow-md);
+  }
   
   .word {
     font-size: 1.2rem;
