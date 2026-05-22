@@ -28,37 +28,6 @@ Return ONLY a valid JSON object, no markdown, no backticks, no explanation.
 }
 `
 
-// async function generateSingleCard(
-//   word: string,
-//   nativeLanguage: string,
-//   targetLanguage: string
-// ) {
-//   const response = await fetch(GEMINI_URL, {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify({
-//       contents: [{
-//         parts: [{ text: PROMPT_TEMPLATE(word.trim(), nativeLanguage, targetLanguage) }]
-//       }],
-//       generationConfig: {
-//         temperature: 0.3,
-//         maxOutputTokens: 1024,
-//       },
-//     }),
-//   })
-
-//   if (!response.ok) {
-//     throw new Error(`Gemini API error: ${response.status}`)
-//   }
-
-//   const data = await response.json() as any
-//   const text = data.candidates?.[0]?.content?.parts?.[0]?.text
-
-//   if (!text) throw new Error('No response from Gemini')
-
-//   const clean = text.replace(/```json|```/g, '').trim()
-//   return JSON.parse(clean)
-// }
 
 async function generateSingleCard(
     word: string,
@@ -86,16 +55,15 @@ async function generateSingleCard(
     }
   
     const data = await response.json() as any
-    console.log('Gemini response:', JSON.stringify(data, null, 2))
+    
   
     const text = data.candidates?.[0]?.content?.parts?.[0]?.text
-    console.log('Extracted text:', text)
+  
   
     if (!text) throw new Error('No response from Gemini')
   
     const clean = text.replace(/```json|```/g, '').trim()
-    console.log('Clean text:', clean)
-    
+
     return JSON.parse(clean)
   }
 
