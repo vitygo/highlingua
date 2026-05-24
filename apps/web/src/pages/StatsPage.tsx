@@ -2,12 +2,10 @@ import { useStudyStats } from '@/features/study'
 import { useCollections } from '@/features/cards'
 import styles from './StatsPage.module.css'
 
-
 export function StatsPage() {
   const { data: stats, isLoading } = useStudyStats()
   const { data: collectionsData } = useCollections()
   const streak = stats?.streak ?? 0
-
   const collections = collectionsData?.collections ?? []
 
   if (isLoading) {
@@ -16,6 +14,14 @@ export function StatsPage() {
 
   const accuracy = stats?.accuracy ?? 0
   const accuracyColor = accuracy >= 80 ? '#c8f55a' : accuracy >= 50 ? '#ffe44d' : '#ffb3d9'
+
+  const collectionsList = stats?.collectionsData ?? collections.map(c => ({
+    id: c.id,
+    name: c.name,
+    emoji: c.emoji,
+    total: c._count.cards,
+    learned: 0,
+  }))
 
   return (
     <div className={styles.page}>
@@ -75,20 +81,23 @@ export function StatsPage() {
 
       <div className={styles.section}>
         <h2 className={styles.sectionTitle}>Collections progress</h2>
-        {collections.length === 0 ? (
+        {collectionsList.length === 0 ? (
           <div className={styles.empty}>No collections yet</div>
         ) : (
           <div className={styles.collectionsList}>
-            {collections.map((col) => {
-              const total = col._count.cards
-              const percent = total > 0 ? Math.min(100, Math.round((Math.random() * 60) + 20)) : 0
+            {collectionsList.map((col) => {
+              const percent = col.total > 0
+                ? Math.round((col.learned / col.total) * 100)
+                : 0
               return (
                 <div key={col.id} className={styles.collectionRow}>
                   <span className={styles.colEmoji}>{col.emoji}</span>
                   <div className={styles.colInfo}>
                     <div className={styles.colTop}>
                       <span className={styles.colName}>{col.name}</span>
-                      <span className={styles.colCount}>{total} cards</span>
+                      <span className={styles.colCount}>
+                        {col.total} cards · {percent}%
+                      </span>
                     </div>
                     <div className={styles.colBar}>
                       <div

@@ -22,6 +22,13 @@ export interface StudyStats {
     accuracy: number
     dueCards: number
     streak: number
+    collectionsData?: {
+        id: string
+        name: string
+        emoji: string
+        total: number
+        learned: number
+      }[]
   }
 
 export const studyApi = {

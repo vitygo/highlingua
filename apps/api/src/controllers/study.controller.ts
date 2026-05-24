@@ -137,6 +137,29 @@ export async function getStats(req: AuthRequest, res: Response): Promise<void> {
         orderBy: { createdAt: 'desc' },
         take: 100,
       })
+
+      const collectionsProgress = await prisma.collection.findMany({
+        where: { userId },
+        include: {
+          _count: { select: { cards: true } },
+          cards: {
+            include: {
+              progress: {
+                where: { userId, repetitions: { gte: 3 } },
+              },
+            },
+          },
+        },
+      })
+      
+      const collectionsData = collectionsProgress.map(col => ({
+        id: col.id,
+        name: col.name,
+        emoji: col.emoji,
+        total: col._count.cards,
+        learned: col.cards.filter(c => c.progress.length > 0).length,
+      }))
+      
   
       const totalCorrect = sessions.reduce((sum, s) => sum + s.correct, 0)
       const totalIncorrect = sessions.reduce((sum, s) => sum + s.incorrect, 0)
@@ -152,7 +175,7 @@ export async function getStats(req: AuthRequest, res: Response): Promise<void> {
       })
   
       const streak = calculateStreak(sessions.map(s => s.createdAt))
-  
+      
       res.json({
         totalCards,
         learnedCards,
@@ -160,6 +183,7 @@ export async function getStats(req: AuthRequest, res: Response): Promise<void> {
         accuracy,
         dueCards,
         streak,
+        collectionsData,
       })
     } catch {
       res.status(500).json({ error: 'Internal server error' })
