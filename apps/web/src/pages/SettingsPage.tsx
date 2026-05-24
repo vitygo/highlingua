@@ -1,123 +1,199 @@
-import { useStudyStats, useStudyActivity } from '@/features/study'
-import { useCollections } from '@/features/cards'
-import { ActivityCalendar } from '@/features/stats/components/ActivityCalendar'
-import styles from './StatsPage.module.css'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import { toast } from 'sonner'
+import { useAuthStore } from '@/store/authStore'
+import { userApi } from '@/api/user'
+import styles from './SettingsPage.module.css'
 
-export function StatsPage() {
-  const { data: stats, isLoading } = useStudyStats()
-  const { data: collectionsData } = useCollections()
-  const { data: activityData } = useStudyActivity()
-  const streak = stats?.streak ?? 0
-  const collections = collectionsData?.collections ?? []
+const AVATARS = [
+  { id: 'lingo', src: '/characters/lingo.png', label: 'Lingo' },
+  { id: 'memo', src: '/characters/memo.png', label: 'Memo' },
+  { id: 'sparky', src: '/characters/sparky.png', label: 'Sparky' },
+  { id: 'trophy', src: '/characters/trophy.png', label: 'Trophy' },
+]
 
-  if (isLoading) {
-    return <div className={styles.loading}>Loading stats...</div>
+const profileSchema = z.object({
+  name: z.string().min(2, 'Min 2 characters'),
+})
+
+const passwordSchema = z.object({
+  currentPassword: z.string().min(1, 'Required'),
+  newPassword: z.string().min(6, 'Min 6 characters'),
+  confirmPassword: z.string().min(1, 'Required'),
+}).refine((d) => d.newPassword === d.confirmPassword, {
+  message: 'Passwords do not match',
+  path: ['confirmPassword'],
+})
+
+type ProfileForm = z.infer<typeof profileSchema>
+type PasswordForm = z.infer<typeof passwordSchema>
+
+export function SettingsPage() {
+  const user = useAuthStore((s) => s.user)
+  const updateUser = useAuthStore((s) => s.updateUser)
+  const [selectedAvatar, setSelectedAvatar] = useState(user?.avatar ?? 'lingo')
+  const [savingProfile, setSavingProfile] = useState(false)
+  const [savingPassword, setSavingPassword] = useState(false)
+
+  const {
+    register: registerProfile,
+    handleSubmit: handleProfileSubmit,
+    formState: { errors: profileErrors },
+  } = useForm<ProfileForm>({
+    resolver: zodResolver(profileSchema),
+    defaultValues: { name: user?.name ?? '' },
+  })
+
+  const {
+    register: registerPassword,
+    handleSubmit: handlePasswordSubmit,
+    formState: { errors: passwordErrors },
+    reset: resetPassword,
+  } = useForm<PasswordForm>({
+    resolver: zodResolver(passwordSchema),
+  })
+
+  const onProfileSubmit = async (data: ProfileForm) => {
+    setSavingProfile(true)
+    try {
+      const res = await userApi.updateProfile({ name: data.name, avatar: selectedAvatar })
+      updateUser({ name: res.user.name, avatar: res.user.avatar })
+      toast.success('Profile updated!')
+    } catch {
+      toast.error('Failed to update profile')
+    } finally {
+      setSavingProfile(false)
+    }
   }
 
-  const accuracy = stats?.accuracy ?? 0
-
-  const collectionsList = stats?.collectionsData ?? collections.map(c => ({
-    id: c.id, name: c.name, emoji: c.emoji,
-    total: c._count.cards, learned: 0,
-  }))
+  const onPasswordSubmit = async (data: PasswordForm) => {
+    setSavingPassword(true)
+    try {
+      await userApi.changePassword({
+        currentPassword: data.currentPassword,
+        newPassword: data.newPassword,
+      })
+      toast.success('Password changed!')
+      resetPassword()
+    } catch {
+      toast.error('Current password is incorrect')
+    } finally {
+      setSavingPassword(false)
+    }
+  }
 
   return (
     <div className={styles.page}>
-      <h1 className={styles.title}>Statistics</h1>
-      <p className={styles.sub}>Your learning progress</p>
+      <h1 className={styles.title}>Settings</h1>
+      <p className={styles.sub}>Manage your profile</p>
 
-      <div className={styles.bento}>
-        {/* Learned — велика зелена */}
-        <div className={`${styles.card} ${styles.cardGreen} ${styles.spanCol}`}>
-          <img src="/characters/trophy.png" alt="Trophy" className={styles.char} />
-          <div className={styles.bigNum}>{stats?.learnedCards ?? 0}</div>
-          <div className={styles.bigLabel}>Words learned</div>
-        </div>
+      <div className={styles.card}>
+        <h2 className={styles.cardTitle}>Profile</h2>
 
-        {/* Accuracy */}
-        <div className={styles.card}>
-          <i className="ti ti-target" aria-hidden="true" />
-          <div className={styles.num}>{accuracy}%</div>
-          <div className={styles.label}>Accuracy</div>
-          <div className={styles.bar}>
-            <div className={styles.barFill} style={{
-              width: `${accuracy}%`,
-              background: accuracy >= 80 ? '#c8f55a' : accuracy >= 50 ? '#ffe44d' : '#ffb3d9'
-            }} />
+        <div className={styles.avatarSection}>
+          <p className={styles.label}>Choose avatar</p>
+          <div className={styles.avatarGrid}>
+            {AVATARS.map((av) => (
+              <button
+                key={av.id}
+                className={`${styles.avatarOption} ${selectedAvatar === av.id ? styles.avatarSelected : ''}`}
+                onClick={() => setSelectedAvatar(av.id)}
+                type="button"
+              >
+                <img src={av.src} alt={av.label} />
+                <span>{av.label}</span>
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Total cards */}
-        <div className={styles.card}>
-          <i className="ti ti-cards" aria-hidden="true" />
-          <div className={styles.num}>{stats?.totalCards ?? 0}</div>
-          <div className={styles.label}>Total cards</div>
-        </div>
+        <form onSubmit={handleProfileSubmit(onProfileSubmit)} className={styles.form}>
+          <div className={styles.field}>
+            <label className={styles.label}>Name</label>
+            <input
+              {...registerProfile('name')}
+              className={styles.input}
+              placeholder="Your name"
+            />
+            {profileErrors.name && (
+              <span className={styles.error}>{profileErrors.name.message}</span>
+            )}
+          </div>
 
-        {/* Streak */}
-        <div className={`${styles.card} ${styles.cardYellow}`}>
-          <i className="ti ti-flame" aria-hidden="true" />
-          <div className={styles.num}>{streak}</div>
-          <div className={styles.label}>Day streak</div>
-        </div>
+          <div className={styles.field}>
+            <label className={styles.label}>Email</label>
+            <input
+              className={styles.input}
+              value={user?.email ?? ''}
+              disabled
+            />
+          </div>
 
-        {/* Due today */}
-        <div className={styles.card}>
-          <i className="ti ti-calendar-due" aria-hidden="true" />
-          <div className={styles.num}>{stats?.dueCards ?? 0}</div>
-          <div className={styles.label}>To review today</div>
-        </div>
+          <button
+            type="submit"
+            className={styles.saveBtn}
+            disabled={savingProfile}
+          >
+            {savingProfile ? 'Saving...' : 'Save profile'}
+          </button>
+        </form>
+      </div>
 
-        {/* Still learning */}
-        <div className={`${styles.card} ${styles.cardPink}`}>
-          <i className="ti ti-brain" aria-hidden="true" />
-          <div className={styles.num}>{(stats?.totalCards ?? 0) - (stats?.learnedCards ?? 0)}</div>
-          <div className={styles.label}>Still learning</div>
-        </div>
+      <div className={styles.card}>
+        <h2 className={styles.cardTitle}>Change password</h2>
+        <form onSubmit={handlePasswordSubmit(onPasswordSubmit)} className={styles.form}>
+          <div className={styles.field}>
+            <label className={styles.label}>Current password</label>
+            <input
+              {...registerPassword('currentPassword')}
+              type="password"
+              className={styles.input}
+              placeholder="••••••••"
+            />
+            {passwordErrors.currentPassword && (
+              <span className={styles.error}>{passwordErrors.currentPassword.message}</span>
+            )}
+          </div>
 
-        {/* Collections */}
-        <div className={styles.card}>
-          <i className="ti ti-folder" aria-hidden="true" />
-          <div className={styles.num}>{stats?.collections ?? 0}</div>
-          <div className={styles.label}>Collections</div>
-        </div>
+          <div className={styles.field}>
+            <label className={styles.label}>New password</label>
+            <input
+              {...registerPassword('newPassword')}
+              type="password"
+              className={styles.input}
+              placeholder="••••••••"
+            />
+            {passwordErrors.newPassword && (
+              <span className={styles.error}>{passwordErrors.newPassword.message}</span>
+            )}
+          </div>
 
-        {/* Activity calendar — wide */}
-        <div className={`${styles.card} ${styles.spanWide}`}>
-          <div className={styles.cardTitle}>Activity</div>
-          <ActivityCalendar activity={activityData?.activity ?? {}} />
-        </div>
+          <div className={styles.field}>
+            <label className={styles.label}>Confirm new password</label>
+            <input
+              {...registerPassword('confirmPassword')}
+              type="password"
+              className={styles.input}
+              placeholder="••••••••"
+            />
+            {passwordErrors.confirmPassword && (
+              <span className={styles.error}>{passwordErrors.confirmPassword.message}</span>
+            )}
+          </div>
 
-        {/* Collections progress — wide */}
-        <div className={`${styles.card} ${styles.spanWide}`}>
-          <div className={styles.cardTitle}>Collections progress</div>
-          {collectionsList.length === 0 ? (
-            <div className={styles.empty}>No collections yet</div>
-          ) : (
-            <div className={styles.colList}>
-              {collectionsList.map((col) => {
-                const percent = col.total > 0 ? Math.round((col.learned / col.total) * 100) : 0
-                return (
-                  <div key={col.id} className={styles.colRow}>
-                    <span className={styles.colEmoji}>{col.emoji}</span>
-                    <div className={styles.colInfo}>
-                      <div className={styles.colTop}>
-                        <span className={styles.colName}>{col.name}</span>
-                        <span className={styles.colCount}>{col.total} cards · {percent}%</span>
-                      </div>
-                      <div className={styles.colBar}>
-                        <div className={styles.colBarFill} style={{ width: `${percent}%` }} />
-                      </div>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          )}
-        </div>
+          <button
+            type="submit"
+            className={styles.saveBtn}
+            disabled={savingPassword}
+          >
+            {savingPassword ? 'Changing...' : 'Change password'}
+          </button>
+        </form>
       </div>
     </div>
   )
 }
 
-export default StatsPage
+export default SettingsPage
