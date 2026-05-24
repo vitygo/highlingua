@@ -115,7 +115,7 @@ export function StudyPage() {
         </div>
       ) : finished ? (
         <div className={styles.finished}>
-          <img src="/characters/trophy.png" alt="Trophy" className={styles.finishedChar} />
+          <img src="/happy.png" alt="Trophy" className={styles.finishedChar}  style={{"transform": "scale(1.5)"}}/>
           <h2 className={styles.finishedTitle}>Session complete!</h2>
           <p className={styles.finishedSub}>
             You learned all {totalCards} cards!
@@ -153,43 +153,52 @@ export function StudyPage() {
               className={`${styles.flashcard} ${flipped ? styles.flipped : ''}`}
               onClick={() => !flipped && setFlipped(true)}
             >
-              <div className={styles.cardFront}>
-                <div className={styles.cardLevel}>
-                  <span className={styles.levelBadge}>{currentCard?.level}</span>
-                  <span className={styles.posBadge}>{currentCard?.partOfSpeech}</span>
-                </div>
-                <div className={styles.cardWord}>{currentCard?.word}</div>
-                <p className={styles.tapHint}>
-                  <i className="ti ti-hand-click" aria-hidden="true" />
-                  Tap to reveal
-                </p>
-              </div>
-
-              <div className={styles.cardBack}>
-                <div className={styles.cardLevel}>
-                  <span className={styles.levelBadge}>{currentCard?.level}</span>
-                  <span className={styles.posBadge}>{currentCard?.partOfSpeech}</span>
-                </div>
-                <div className={styles.cardTranslation}>{currentCard?.translation}</div>
-                <p className={styles.cardExplanation}>{currentCard?.explanation}</p>
-                {currentCard?.examples[0] && (
-                  <div className={styles.example}>
-                    <div className={styles.exSentence}>
-                      "{currentCard.examples[0].sentence}"
-                    </div>
-                    <div className={styles.exTrans}>
-                      {currentCard.examples[0].translation}
-                    </div>
-                  </div>
-                )}
-                {currentCard?.synonyms.length > 0 && (
-                  <div className={styles.synonyms}>
-                    {currentCard.synonyms.slice(0, 3).map((s) => (
-                      <span key={s} className={styles.syn}>{s}</span>
-                    ))}
-                  </div>
-                )}
-              </div>
+            <div className={styles.cardFront}>
+  <div className={styles.cardLevel}>
+    <span className={styles.levelBadge}>{currentCard?.level}</span>
+    <span className={styles.posBadge}>{currentCard?.partOfSpeech}</span>
+  </div>
+  <div className={styles.cardWord}>{currentCard?.word}</div>
+  <img
+    src="/c2.png"
+    alt="Lingo"
+    className={styles.cardCharacter}
+  />
+  <p className={styles.tapHint}>
+    <i className="ti ti-hand-click" aria-hidden="true" />
+    Tap to reveal
+  </p>
+</div>
+<div className={styles.cardBack}>
+  <div className={styles.cardLevel}>
+    <span className={styles.levelBadge}>{currentCard?.level}</span>
+    <span className={styles.posBadge}>{currentCard?.partOfSpeech}</span>
+  </div>
+  <div className={styles.cardTranslation}>{currentCard?.translation}</div>
+  <p className={styles.cardExplanation}>{currentCard?.explanation}</p>
+  {currentCard?.examples[0] && (
+    <div className={styles.example}>
+      <div className={styles.exSentence}>
+        "{currentCard.examples[0].sentence}"
+      </div>
+      <div className={styles.exTrans}>
+        {currentCard.examples[0].translation}
+      </div>
+    </div>
+  )}
+  {currentCard?.synonyms.length > 0 && (
+    <div className={styles.synonyms}>
+      {currentCard.synonyms.slice(0, 3).map((s) => (
+        <span key={s} className={styles.syn}>{s}</span>
+      ))}
+    </div>
+  )}
+  <img
+    src="/c1.png"
+    alt="Memo"
+    className={styles.cardCharacter}
+  />
+</div>
             </div>
           </div>
 

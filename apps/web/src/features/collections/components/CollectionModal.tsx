@@ -2,7 +2,18 @@ import { useState } from 'react'
 import { useCreateCollection } from '@/features/cards'
 import styles from './CollectionModal.module.css'
 
-const EMOJIS = ['📚', '✈️', '🍕', '💼', '🏠', '🎵', '💪', '🌍', '🎓', '💬']
+const ICONS = [
+  { id: 'food', src: '/icons/food.png', label: 'Food' },
+  { id: 'house', src: '/icons/house.png', label: 'Home' },
+  { id: 'music', src: '/icons/music.png', label: 'Music' },
+  { id: 'speak', src: '/icons/speak.png', label: 'Speaking' },
+  { id: 'sport', src: '/icons/sport.png', label: 'Sport' },
+  { id: 'study', src: '/icons/study.png', label: 'Study' },
+  { id: 'travel', src: '/icons/travel.png', label: 'Travel' },
+  { id: 'university', src: '/icons/university.png', label: 'University' },
+  { id: 'work', src: '/icons/work.png', label: 'Work' },
+  { id: 'world', src: '/icons/world.png', label: 'World' },
+]
 
 interface Props {
   onClose: () => void
@@ -10,12 +21,12 @@ interface Props {
 
 export function CollectionModal({ onClose }: Props) {
   const [name, setName] = useState('')
-  const [emoji, setEmoji] = useState('📚')
+  const [icon, setIcon] = useState('study')
   const { mutate: create, isPending } = useCreateCollection()
 
   const handleSubmit = () => {
     if (!name.trim()) return
-    create({ name, emoji }, { onSuccess: onClose })
+    create({ name, emoji: icon }, { onSuccess: onClose })
   }
 
   return (
@@ -41,15 +52,16 @@ export function CollectionModal({ onClose }: Props) {
         </div>
 
         <div className={styles.field}>
-          <label className={styles.label}>Emoji</label>
+          <label className={styles.label}>Icon</label>
           <div className={styles.emojis}>
-            {EMOJIS.map((e) => (
+            {ICONS.map((ic) => (
               <button
-                key={e}
-                className={`${styles.emojiBtn} ${emoji === e ? styles.emojiSelected : ''}`}
-                onClick={() => setEmoji(e)}
+                key={ic.id}
+                className={`${styles.emojiBtn} ${icon === ic.id ? styles.emojiSelected : ''}`}
+                onClick={() => setIcon(ic.id)}
+                title={ic.label}
               >
-                {e}
+                <img src={ic.src} alt={ic.label} className={styles.iconImg} />
               </button>
             ))}
           </div>

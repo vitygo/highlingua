@@ -120,3 +120,45 @@
     opacity: 0.6;
     cursor: not-allowed;
   }
+
+  .iconImg {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+  }
+  
+  .emojiBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg);
+    border: var(--border-thin);
+    border-radius: var(--radius-md);
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: transform 0.1s;
+  }
+  
+  .emojiBtn:hover {
+    transform: scale(1.1);
+  }
+  
+  .emojiSelected {
+    border: var(--border);
+    background: var(--color-green);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .emojiBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  .iconImg {
+    width: auto;
+    height: 35px;
+    display: block;
+    object-fit: contain;
+  }

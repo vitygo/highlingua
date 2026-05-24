@@ -1,13 +1,14 @@
 .card {
-    border: var(--border);
-    box-shadow: var(--shadow-lg);
-    border-radius: var(--radius-xl);
-    padding: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    transition: transform 0.15s, box-shadow 0.15s;
-  }
+  border: var(--border);
+  box-shadow: var(--shadow-lg);
+  border-radius: var(--radius-xl);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+  min-height: 220px;
+}
   
   .card:hover {
     transform: translate(-2px, -2px);
@@ -20,9 +21,9 @@
     justify-content: space-between;
   }
   
-  .emoji {
-    font-size: 2rem;
-  }
+ 
+
+  
   
   .deleteBtn {
     background: none;
@@ -77,4 +78,17 @@
   .openBtn:hover {
     transform: translate(-1px, -1px);
     box-shadow: var(--shadow-md);
+  }
+
+  .iconContainer {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+  }
+  
+  .emoji {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
   }

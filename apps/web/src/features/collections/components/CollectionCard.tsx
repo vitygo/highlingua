@@ -10,12 +10,16 @@ interface Props {
 }
 
 export function CollectionCard({ collection, onOpen, onDelete }: Props) {
-  const bg = BG_COLORS[collection.name.length % BG_COLORS.length]
+  const bg = BG_COLORS[
+    collection.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % BG_COLORS.length
+  ]
 
   return (
     <div className={styles.card} style={{ background: bg }}>
       <div className={styles.top}>
-        <span className={styles.emoji}>{collection.emoji}</span>
+        <div className={styles.iconContainer}>
+        <img className={styles.emoji} src={`/icons/${collection.emoji}.png`}></img>
+        </div>
         <button
           className={styles.deleteBtn}
           onClick={(e) => { e.stopPropagation(); onDelete() }}

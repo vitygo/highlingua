@@ -26,11 +26,11 @@ export function DashboardPage() {
             Start studying
           </button>
         </div>
-        <img
+        {/* <img
           src="/characters/im5.png"
           alt="Lingo"
           className={styles.mascot}
-        />
+        /> */}
       </div>
 
       <div className={styles.statsRow}>
@@ -84,7 +84,9 @@ export function DashboardPage() {
         onClick={() => navigate('/collections')}
       >
         <div className={styles.colTop}>
-          <span className={styles.colEmoji}>{col.emoji}</span>
+          <div className={styles.iconContainer}>
+          <img className={styles.colEmoji} src={`/icons/${col.emoji}.png`}></img>
+          </div>
           <span className={styles.colBadge}>
             {col._count.cards} {col._count.cards === 1 ? 'card' : 'cards'}
           </span>
