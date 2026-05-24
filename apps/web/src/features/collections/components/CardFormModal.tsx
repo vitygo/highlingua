@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import { toast } from 'sonner'
 import { useCreateCard, useUpdateCard } from '@/features/cards'
 import { Card } from '@/api/collections'
 import { Select } from '@/components/Select/Select'
@@ -52,14 +53,31 @@ export function CardFormModal({ collectionId, card, onClose }: Props) {
   }
 
   const handleRemoveExample = (index: number) => {
+    if (examples.length === 1) {
+      toast.error('At least one example is required')
+      return
+    }
     setExamples(examples.filter((_, i) => i !== index))
   }
 
   const handleSubmit = () => {
-    if (!word.trim() || !translation.trim()) return
+    if (!word.trim()) {
+      toast.error('Word is required')
+      return
+    }
+    if (!translation.trim()) {
+      toast.error('Translation is required')
+      return
+    }
+
+    const validExamples = examples.filter(ex => ex.sentence.trim() && ex.translation.trim())
+
+    if (validExamples.length === 0) {
+      toast.error('Add at least one example sentence with translation')
+      return
+    }
 
     const synonyms = synonymsText.split(',').map(s => s.trim()).filter(Boolean)
-    const validExamples = examples.filter(ex => ex.sentence.trim())
 
     const data = {
       word: word.trim(),
@@ -93,16 +111,21 @@ export function CardFormModal({ collectionId, card, onClose }: Props) {
         <div className={styles.body}>
           <div className={styles.row2}>
             <div className={styles.field}>
-              <label className={styles.label}>Word *</label>
+              <label className={styles.label}>
+                Word <span style={{ color: '#c62828' }}>*</span>
+              </label>
               <input
                 className={styles.input}
                 value={word}
                 onChange={e => setWord(e.target.value)}
                 placeholder="e.g. airport"
+                autoFocus
               />
             </div>
             <div className={styles.field}>
-              <label className={styles.label}>Translation *</label>
+              <label className={styles.label}>
+                Translation <span style={{ color: '#c62828' }}>*</span>
+              </label>
               <input
                 className={styles.input}
                 value={translation}
@@ -152,7 +175,9 @@ export function CardFormModal({ collectionId, card, onClose }: Props) {
           </div>
 
           <div className={styles.field}>
-            <label className={styles.label}>Examples</label>
+            <label className={styles.label}>
+              Examples <span style={{ color: '#c62828' }}>*</span>
+            </label>
             {examples.map((ex, i) => (
               <div key={i} className={styles.exampleRow}>
                 <div className={styles.exampleFields}>
@@ -166,7 +191,7 @@ export function CardFormModal({ collectionId, card, onClose }: Props) {
                     className={styles.input}
                     value={ex.translation}
                     onChange={e => handleExampleChange(i, 'translation', e.target.value)}
-                    placeholder="Translation"
+                    placeholder="Translation of the sentence"
                   />
                 </div>
                 <button
@@ -191,7 +216,7 @@ export function CardFormModal({ collectionId, card, onClose }: Props) {
           <button
             className={styles.submitBtn}
             onClick={handleSubmit}
-            disabled={isCreating || isUpdating || !word.trim() || !translation.trim()}
+            disabled={isCreating || isUpdating}
           >
             {isCreating || isUpdating ? 'Saving...' : isEdit ? 'Save changes' : 'Add card'}
           </button>
