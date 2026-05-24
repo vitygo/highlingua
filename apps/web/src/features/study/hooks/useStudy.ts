@@ -26,3 +26,10 @@ export function useRateCard() {
     onError: () => toast.error('Failed to rate card'),
   })
 }
+
+export function useStudyActivity() {
+  return useQuery({
+    queryKey: ['study', 'activity'],
+    queryFn: studyApi.getActivity,
+  })
+}

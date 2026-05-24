@@ -50,4 +50,9 @@ export const studyApi = {
     const res = await apiClient.get('/study/stats')
     return res.data
   },
+
+  getActivity: async (): Promise<{ activity: Record<string, number> }> => {
+    const res = await apiClient.get('/study/activity')
+    return res.data
+  },
 }

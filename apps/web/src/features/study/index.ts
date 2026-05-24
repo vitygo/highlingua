@@ -1,1 +1,1 @@
-export { useStudyCards, useStudyStats, useRateCard } from './hooks/useStudy'
+export { useStudyCards, useStudyStats, useRateCard, useStudyActivity } from './hooks/useStudy'

@@ -175,7 +175,7 @@ export async function getStats(req: AuthRequest, res: Response): Promise<void> {
       })
   
       const streak = calculateStreak(sessions.map(s => s.createdAt))
-      
+
       res.json({
         totalCards,
         learnedCards,
@@ -217,4 +217,27 @@ export async function getStats(req: AuthRequest, res: Response): Promise<void> {
     }
   
     return streak
+  }
+
+export async function getActivity(req: AuthRequest, res: Response): Promise<void> {
+    try {
+      const userId = req.userId!
+  
+      const sessions = await prisma.studySession.findMany({
+        where: { userId },
+        select: { createdAt: true },
+        orderBy: { createdAt: 'asc' },
+      })
+  
+      const activityMap: Record<string, number> = {}
+  
+      sessions.forEach(s => {
+        const day = new Date(s.createdAt).toISOString().split('T')[0]
+        activityMap[day] = (activityMap[day] ?? 0) + 1
+      })
+  
+      res.json({ activity: activityMap })
+    } catch {
+      res.status(500).json({ error: 'Internal server error' })
+    }
   }
