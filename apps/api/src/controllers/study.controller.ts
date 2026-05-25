@@ -125,7 +125,7 @@ export async function getStats(req: AuthRequest, res: Response): Promise<void> {
       })
   
       const learnedCards = await prisma.cardProgress.count({
-        where: { userId, repetitions: { gte: 3 } },
+        where: { userId, repetitions: { gte: 1 } },
       })
   
       const collections = await prisma.collection.count({
@@ -145,7 +145,7 @@ export async function getStats(req: AuthRequest, res: Response): Promise<void> {
           cards: {
             include: {
               progress: {
-                where: { userId, repetitions: { gte: 3 } },
+                where: { userId, repetitions: { gte: 1 } },
               },
             },
           },
