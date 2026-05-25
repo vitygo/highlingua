@@ -23,22 +23,18 @@ export const useAuthStore = create<AuthState>((set) => ({
       user: state.user ? { ...state.user, ...data } : null,
     })),
 
-  logout: () => {
-    authApi.logout()
+  logout: async () => {
+    try {
+      await authApi.logout()
+    } catch {}
     set({ user: null, isAuthenticated: false })
   },
 
   initAuth: async () => {
-    const token = localStorage.getItem('accessToken')
-    if (!token) {
-      set({ isLoading: false })
-      return
-    }
     try {
       const { user } = await authApi.getMe()
       set({ user, isAuthenticated: true, isLoading: false })
     } catch {
-      authApi.logout()
       set({ user: null, isAuthenticated: false, isLoading: false })
     }
   },

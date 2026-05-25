@@ -6,24 +6,22 @@ export interface AuthRequest extends Request {
 }
 
 export function authMiddleware(
-  req: AuthRequest,
-  res: Response,
+  req: AuthRequest, 
+  res: Response, 
   next: NextFunction
 ): void {
-  const authHeader = req.headers.authorization
+  const token = req.cookies.accessToken || req.headers.authorization?.split(' ')[1]
 
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    res.status(401).json({ error: 'Unauthorized' })
+  if (!token) {
+    res.status(401).json({ error: 'Not authenticated' })
     return
   }
-
-  const token = authHeader.split(' ')[1]
 
   try {
     const payload = verifyAccessToken(token)
     req.userId = payload.userId
     next()
   } catch {
-    res.status(401).json({ error: 'Invalid or expired token' })
+    res.status(401).json({ error: 'Invalid token' })
   }
 }

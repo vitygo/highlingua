@@ -4,6 +4,32 @@ import { prisma } from '@/lib/prisma'
 import { signAccessToken, signRefreshToken, verifyRefreshToken } from '@/lib/tokens'
 import { RegisterInput, LoginInput } from '@/schemas/auth.schema'
 
+const COOKIE_OPTIONS = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: 'lax' as const,
+  path: '/',
+}
+
+const ACCESS_MAX_AGE = 15 * 60 * 1000
+const REFRESH_MAX_AGE = 7 * 24 * 60 * 60 * 1000
+
+function setAuthCookies(res: Response, accessToken: string, refreshToken: string) {
+  res.cookie('accessToken', accessToken, {
+    ...COOKIE_OPTIONS,
+    maxAge: ACCESS_MAX_AGE,
+  })
+  res.cookie('refreshToken', refreshToken, {
+    ...COOKIE_OPTIONS,
+    maxAge: REFRESH_MAX_AGE,
+  })
+}
+
+function clearAuthCookies(res: Response) {
+  res.clearCookie('accessToken', COOKIE_OPTIONS)
+  res.clearCookie('refreshToken', COOKIE_OPTIONS)
+}
+
 export async function register(req: Request, res: Response): Promise<void> {
   try {
     const { email, password, name } = req.body as RegisterInput
@@ -22,9 +48,9 @@ export async function register(req: Request, res: Response): Promise<void> {
     const accessToken = signAccessToken(user.id)
     const refreshToken = signRefreshToken(user.id)
 
+    setAuthCookies(res, accessToken, refreshToken)
+
     res.status(201).json({
-      accessToken,
-      refreshToken,
       user: { id: user.id, email: user.email, name: user.name, avatar: user.avatar },
     })
   } catch (error) {
@@ -51,9 +77,9 @@ export async function login(req: Request, res: Response): Promise<void> {
     const accessToken = signAccessToken(user.id)
     const refreshToken = signRefreshToken(user.id)
 
+    setAuthCookies(res, accessToken, refreshToken)
+
     res.json({
-      accessToken,
-      refreshToken,
       user: { id: user.id, email: user.email, name: user.name, avatar: user.avatar },
     })
   } catch (error) {
@@ -63,7 +89,12 @@ export async function login(req: Request, res: Response): Promise<void> {
 
 export async function refresh(req: Request, res: Response): Promise<void> {
   try {
-    const { refreshToken } = req.body
+    const refreshToken = req.cookies.refreshToken
+
+    if (!refreshToken) {
+      res.status(401).json({ error: 'No refresh token' })
+      return
+    }
 
     const payload = verifyRefreshToken(refreshToken)
     const user = await prisma.user.findUnique({ where: { id: payload.userId } })
@@ -73,11 +104,14 @@ export async function refresh(req: Request, res: Response): Promise<void> {
       return
     }
 
-    const accessToken = signAccessToken(user.id)
+    const newAccessToken = signAccessToken(user.id)
     const newRefreshToken = signRefreshToken(user.id)
 
-    res.json({ accessToken, refreshToken: newRefreshToken })
+    setAuthCookies(res, newAccessToken, newRefreshToken)
+
+    res.json({ success: true })
   } catch {
+    clearAuthCookies(res)
     res.status(401).json({ error: 'Invalid refresh token' })
   }
 }
@@ -99,4 +133,9 @@ export async function getMe(req: Request, res: Response): Promise<void> {
   } catch {
     res.status(500).json({ error: 'Internal server error' })
   }
+}
+
+export async function logout(req: Request, res: Response): Promise<void> {
+  clearAuthCookies(res)
+  res.json({ success: true })
 }

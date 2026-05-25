@@ -7,15 +7,19 @@ import collectionsRoutes from '@/routes/collections.routes'
 import studyRoutes from '@/routes/study.routes'
 import quizRoutes from '@/routes/quiz.routes'
 import userRoutes from '@/routes/user.routes'
+import cookieParser from 'cookie-parser'
 
 const app = express()
 const PORT = process.env.PORT || 3001
 
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:4173'],
+  origin: process.env.CLIENT_URL || 'http://localhost:5173',
   credentials: true,
 }))
+
+
 app.use(express.json())
+app.use(cookieParser())
 
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', message: 'Highlingua API is running' })

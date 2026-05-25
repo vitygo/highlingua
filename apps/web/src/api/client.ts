@@ -1,51 +1,59 @@
 import axios from 'axios'
 
-const BASE_URL = import.meta.env.VITE_API_URL || '/api'
-
 export const apiClient = axios.create({
-  baseURL: BASE_URL,
+  baseURL: import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : '/api',
+  timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 })
 
-apiClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem('accessToken')
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`
-  }
-  return config
-})
+let isRefreshing = false
+let failedQueue: Array<{
+  resolve: () => void
+  reject: (err: unknown) => void
+}> = []
+
+const processQueue = (error: unknown) => {
+  failedQueue.forEach((p) => {
+    error ? p.reject(error) : p.resolve()
+  })
+  failedQueue = []
+}
 
 apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const original = error.config
+    const originalRequest = error.config
+    const url = originalRequest.url || ''
 
-    if (error.response?.status === 401 && !original._retry) {
-      original._retry = true
+    const isAuthRoute = url.includes('/auth/login') || 
+                        url.includes('/auth/register') || 
+                        url.includes('/auth/refresh') ||
+                        url.includes('/auth/me')
 
-      const refreshToken = localStorage.getItem('refreshToken')
-      if (!refreshToken) {
-        localStorage.removeItem('accessToken')
-        localStorage.removeItem('refreshToken')
-        window.location.href = '/login'
-        return Promise.reject(error)
+    if (error.response?.status === 401 && !originalRequest._retry && !isAuthRoute) {
+      originalRequest._retry = true
+
+      if (isRefreshing) {
+        return new Promise<void>((resolve, reject) => {
+          failedQueue.push({ resolve, reject })
+        }).then(() => apiClient(originalRequest))
       }
 
+      isRefreshing = true
+
       try {
-        const { data } = await axios.post(`${BASE_URL}/auth/refresh`, {
-          refreshToken,
-        })
-        localStorage.setItem('accessToken', data.accessToken)
-        localStorage.setItem('refreshToken', data.refreshToken)
-        original.headers.Authorization = `Bearer ${data.accessToken}`
-        return apiClient(original)
-      } catch {
-        localStorage.removeItem('accessToken')
-        localStorage.removeItem('refreshToken')
+        await apiClient.post('/auth/refresh')
+        processQueue(null)
+        return apiClient(originalRequest)
+      } catch (refreshError) {
+        processQueue(refreshError)
         window.location.href = '/login'
-        return Promise.reject(error)
+        return Promise.reject(refreshError)
+      } finally {
+        isRefreshing = false
       }
     }
 
