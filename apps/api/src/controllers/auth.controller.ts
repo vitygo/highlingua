@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs'
 import { prisma } from '@/lib/prisma'
 import { signAccessToken, signRefreshToken, verifyRefreshToken } from '@/lib/tokens'
 import { RegisterInput, LoginInput } from '@/schemas/auth.schema'
+import { seedStarterCards } from '@/lib/seedStarterCards'
 
 const COOKIE_OPTIONS = {
   httpOnly: true,
@@ -44,6 +45,8 @@ export async function register(req: Request, res: Response): Promise<void> {
     const user = await prisma.user.create({
       data: { email, password: hashedPassword, name, avatar: 'lingo' },
     })
+
+    await seedStarterCards(user.id)
 
     const accessToken = signAccessToken(user.id)
     const refreshToken = signRefreshToken(user.id)

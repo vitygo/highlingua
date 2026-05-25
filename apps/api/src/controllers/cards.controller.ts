@@ -31,42 +31,43 @@ Return ONLY a valid JSON object, no markdown, no backticks, no explanation.
 
 
 async function generateSingleCard(
-    word: string,
-    nativeLanguage: string,
-    targetLanguage: string
-  ) {
-    const response = await fetch(GEMINI_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{
-          parts: [{ text: PROMPT_TEMPLATE(word.trim(), nativeLanguage, targetLanguage) }]
-        }],
-        generationConfig: {
-          temperature: 0.3,
-          maxOutputTokens: 1024,
-        },
-      }),
-    })
-  
-    if (!response.ok) {
-      const errText = await response.text()
-      console.error('Gemini API error:', response.status, errText)
-      throw new Error(`Gemini API error: ${response.status}`)
-    }
-  
-    const data = await response.json() as any
-    
-  
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text
-  
-  
-    if (!text) throw new Error('No response from Gemini')
-  
-    const clean = text.replace(/```json|```/g, '').trim()
+  word: string,
+  nativeLanguage: string,
+  targetLanguage: string
+) {
+  const response = await fetch(GEMINI_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{
+        parts: [{ text: PROMPT_TEMPLATE(word.trim(), nativeLanguage, targetLanguage) }]
+      }],
+      generationConfig: {
+        temperature: 0.3,
+        maxOutputTokens: 1024,
+      },
+    }),
+  })
 
-    return JSON.parse(clean)
+  if (!response.ok) {
+    const errText = await response.text()
+    console.error('Gemini API error:', response.status, errText)
+    if (response.status === 429) {
+      throw new Error('RATE_LIMIT')
+    }
+    throw new Error(`Gemini API error: ${response.status}`)
   }
+
+  const data = await response.json() as any
+
+  const text = data.candidates?.[0]?.content?.parts?.[0]?.text
+
+  if (!text) throw new Error('No response from Gemini')
+
+  const clean = text.replace(/```json|```/g, '').trim()
+
+  return JSON.parse(clean)
+}
 
 export async function generateCards(req: AuthRequest, res: Response): Promise<void> {
   try {
@@ -90,7 +91,15 @@ export async function generateCards(req: AuthRequest, res: Response): Promise<vo
       try {
         const card = await generateSingleCard(word, nativeLanguage, targetLanguage)
         cards.push(card)
-      } catch (err) {
+      } catch (err: any) {
+        if (err.message === 'RATE_LIMIT') {
+          res.status(429).json({
+            error: 'AI generation limit reached. The creator of this app is using a free API tier. To see how this feature works, check out the demo video on LinkedIn: https://www.linkedin.com/in/viktor-kobylianskyi/',
+            cards,
+            errors,
+          })
+          return
+        }
         errors.push({ word, error: 'Failed to generate' })
       }
     }
