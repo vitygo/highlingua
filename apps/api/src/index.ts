@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3001
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://highlingua.onrender.com',
+  'https://highlingua-api.onrender.com',
 ];
 
 app.use(
@@ -43,6 +43,17 @@ app.use('/api/collections', collectionsRoutes)
 app.use('/api/study', studyRoutes)
 app.use('/api/quiz', quizRoutes)
 app.use('/api/user', userRoutes)
+
+import path from 'path'
+
+// Serve frontend in production
+if (process.env.NODE_ENV === 'production') {
+  const frontendPath = path.join(__dirname, '../../web/dist')
+  app.use(express.static(frontendPath))
+  app.get('*', (_req, res) => {
+    res.sendFile(path.join(frontendPath, 'index.html'))
+  })
+}
 
 app.listen(PORT, () => {
   console.log(`🚀 API running on http://localhost:${PORT}`)
