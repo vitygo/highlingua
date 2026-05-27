@@ -162,7 +162,6 @@ export function LandingPage() {
 
 
       <section className={styles.cta}>
-        <img src="/characters/trophy.png" alt="Trophy" className={styles.ctaChar} />
         <h2 className={styles.ctaTitle}>Ready to start learning?</h2>
         <p className={styles.ctaDesc}>Free to use. No credit card required. Just sign up and go.</p>
         <button className={styles.ctaBtn} onClick={() => navigate('/register')}>
