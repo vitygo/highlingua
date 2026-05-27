@@ -13,7 +13,7 @@ export function useLogin() {
     onSuccess: (data) => {
       setUser(data.user)
       toast.success('Welcome back!')
-      navigate('/')
+      navigate('/dashboard')
     },
     onError: () => {
       toast.error('Invalid email or password')
@@ -30,7 +30,7 @@ export function useRegister() {
     onSuccess: (data) => {
       setUser(data.user)
       toast.success('Account created!')
-      navigate('/')
+      navigate('/dashboard')
     },
     onError: () => {
       toast.error('Registration failed')
